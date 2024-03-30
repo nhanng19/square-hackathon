@@ -10,11 +10,11 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-const TopBar = () => {
+const MenuBar = () => {
   return (
     <Sheet>
       <nav className="bg-background border-b fixed top-0 z-10 w-full">
-        <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 top-0">
+        <div className="flex flex-wrap items-center justify-between mx-auto p-4 top-0">
           <Link
             href="/"
             className="flex items-center space-x-3 rtl:space-x-reverse"
@@ -89,4 +89,4 @@ const TopBar = () => {
   );
 };
 
-export default TopBar;
+export default MenuBar;
