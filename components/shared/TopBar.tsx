@@ -10,6 +10,8 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { Menu } from "lucide-react";
+import { SignInButton } from "@clerk/nextjs";
 const TopBar = () => {
   return (
     <Sheet>
@@ -29,21 +31,7 @@ const TopBar = () => {
             aria-expanded="false"
           >
             <span className="sr-only">Open main menu</span>
-            <svg
-              className="w-5 h-5"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 17 14"
-            >
-              <path
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M1 1h15M1 7h15M1 13h15"
-              />
-            </svg>
+            <Menu />
           </SheetTrigger>
 
           <div className="hidden w-full md:block md:w-auto" id="navbar-default">
@@ -65,9 +53,11 @@ const TopBar = () => {
                 </a>
               </li>
               <li>
-                <Button variant="default">
-                  <Link href="/dashboard">Log In</Link>
-                </Button>
+                <SignInButton mode="modal">
+                  <Button variant="default">
+                    Log In
+                  </Button>
+                </SignInButton> 
               </li>
               <li>
                 <ModeToggle />

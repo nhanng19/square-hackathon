@@ -5,6 +5,8 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { cn } from "@/lib/utils";
 import TopBar from "@/components/shared/TopBar";
 import NextTopLoader from "nextjs-toploader";
+import { ClerkProvider } from "@clerk/nextjs";
+
 const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",
@@ -21,19 +23,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className={cn(
-          "min-h-screen bg-background font-sans antialiased",
-          fontSans.variable
-        )}
-      >
-        <NextTopLoader />
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <TopBar />
-          {children}
-        </ThemeProvider>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en" suppressHydrationWarning>
+        <body
+          className={cn(
+            "min-h-screen bg-background font-sans antialiased",
+            fontSans.variable
+          )}
+        >
+          <NextTopLoader />
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            <TopBar />
+            {children}
+          </ThemeProvider>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

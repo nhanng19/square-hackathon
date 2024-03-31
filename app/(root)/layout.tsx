@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 import MenuBar from "@/components/shared/MenuBar";
 import NextTopLoader from "nextjs-toploader";
 import Sidebar from "@/components/shared/Sidebar";
-
+import { ClerkProvider } from "@clerk/nextjs";
 const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",
@@ -23,24 +23,26 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className={cn(
-          "min-h-screen bg-background font-sans antialiased",
-          fontSans.variable
-        )}
-      >
-        <NextTopLoader />
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <MenuBar />
-          <div className="flex h-screen border-collapse overflow-hidden">
-            <Sidebar />
-            <main className="flex-1 overflow-y-auto overflow-x-hidden pt-16 bg-secondary/10 pb-1">
-              {children}
-            </main>
-          </div>
-        </ThemeProvider>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en" suppressHydrationWarning>
+        <body
+          className={cn(
+            "min-h-screen bg-background font-sans antialiased",
+            fontSans.variable
+          )}
+        >
+          <NextTopLoader />
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            <MenuBar />
+            <div className="flex h-screen border-collapse overflow-hidden">
+              <Sidebar />
+              <main className="flex-1 overflow-y-auto overflow-x-hidden pt-16 bg-secondary/10 pb-1">
+                {children}
+              </main>
+            </div>
+          </ThemeProvider>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
