@@ -36,8 +36,10 @@ export default function RootLayout({
             <MenuBar />
             <div className="flex h-screen border-collapse overflow-hidden">
               <Sidebar />
-              <main className="flex-1 overflow-y-auto overflow-x-hidden pt-16 bg-secondary/10 pb-1">
-                {children}
+              <main className="overflow-auto justify-center flex w-full mx-auto pb-4 px-4 md:px-6">
+                <div className="w-full md:max-w-6xl mt-6">
+                  {children}
+                </div>
               </main>
             </div>
           </ThemeProvider>
