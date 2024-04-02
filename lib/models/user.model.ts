@@ -1,24 +1,45 @@
 import mongoose from "mongoose";
+const { Schema } = mongoose;
 
-const userSchema = new mongoose.Schema({
-  id: {
-    type: String,
-    required: true,
-  },
-  username: {
+const userSchema = new Schema({
+  id: { type: String, unique: true },
+  email: {
     type: String,
     required: true,
     unique: true,
+    match: [/.+@.+\..+/, "Must use a valid email address"],
   },
-  name: {
-    type: String,
-    required: true,
-  },
-  square_id: {
-    type: String,
-  },
+  password: String,
+  userDeniedSquare: { type: Boolean, default: false },
+  firstName: String,
+  lastName: String,
+  salt: String,
+  avatar: String,
+  createdAt: { type: Date, default: Date.now },
+  metaData: { type: Schema.Types.ObjectId, ref: "MetaData" },
+  squareData: { type: Schema.Types.ObjectId, ref: "SquareData" },
 });
 
-const User = mongoose.models.User || mongoose.model("User", userSchema);
+const squareDataSchema = new Schema({
+  id: { type: Number, autoIncrement: true, unique: true },
+  tokens: String,
+  expiresAt: String,
+  merchantId: String,
+  userId: { type: String, unique: true },
+  user: { type: Schema.Types.ObjectId, ref: "User" },
+});
 
-export default User;
+const metaDataSchema = new Schema({
+  id: { type: Number, autoIncrement: true, unique: true },
+  userId: { type: String, unique: true },
+  iv: String,
+  scopes: String,
+  squareTokenLastUpdated: { type: Date, default: Date.now },
+  user: { type: Schema.Types.ObjectId, ref: "User" },
+});
+
+export const User = mongoose.models.User || mongoose.model("User", userSchema);
+export const SquareData =
+  mongoose.models.SquareData || mongoose.model("SquareData", squareDataSchema);
+export const MetaData =
+  mongoose.models.MetaData || mongoose.model("MetaData", metaDataSchema);

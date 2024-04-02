@@ -42,3 +42,5 @@ export const NavItems: NavItem[] = [
     color: "text-sky-500",
   },
 ];
+
+export const SCOPES = ["MERCHANT_PROFILE_READ", "ORDERS_READ"];

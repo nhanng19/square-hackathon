@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { SideNav } from "@/components/shared/side-nav";
-import { NavItems } from "@/constants/side-nav";
+import { NavItems } from "@/constants";
 
 import { cn } from "@/lib/utils";
 import { useSidebar } from "@/hooks/useSidebar";

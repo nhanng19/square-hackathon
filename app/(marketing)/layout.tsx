@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 import TopBar from "@/components/shared/TopBar";
 import NextTopLoader from "nextjs-toploader";
 import { ClerkProvider } from "@clerk/nextjs";
-
+import { Toaster } from "@/components/ui/sonner";
 const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",
@@ -31,6 +31,7 @@ export default function RootLayout({
             fontSans.variable
           )}
         >
+          <Toaster richColors position="top-center"/>
           <NextTopLoader />
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <TopBar />

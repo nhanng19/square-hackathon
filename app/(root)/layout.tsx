@@ -7,6 +7,7 @@ import MenuBar from "@/components/shared/MenuBar";
 import NextTopLoader from "nextjs-toploader";
 import Sidebar from "@/components/shared/Sidebar";
 import { ClerkProvider } from "@clerk/nextjs";
+
 const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",

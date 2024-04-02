@@ -11,7 +11,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
-import { SignInButton } from "@clerk/nextjs";
+
 const TopBar = () => {
   return (
     <Sheet>
@@ -53,11 +53,9 @@ const TopBar = () => {
                 </a>
               </li>
               <li>
-                <SignInButton mode="modal">
-                  <Button variant="default">
-                    Log In
+                  <Button variant="default" asChild>
+                    <Link href="/login">Log In</Link>
                   </Button>
-                </SignInButton> 
               </li>
               <li>
                 <ModeToggle />

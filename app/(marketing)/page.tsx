@@ -2,7 +2,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { ModeToggle } from "@/components/mode-toggle";
 import Circles from "@/components/svg/circles";
-import { SignInButton } from "@clerk/nextjs";
+import Link from "next/link";
 export default function Home() {
   return (
     <>
@@ -23,9 +23,9 @@ export default function Home() {
                 </p>
                 <ul className="mb-10 flex flex-wrap items-center justify-center gap-5">
                   <li>
-                    <SignInButton mode="modal">
-                      <Button variant="default">Get started</Button>
-                    </SignInButton>
+                    <Button variant="default" asChild>
+                      <Link href="/login">Get Started</Link>
+                    </Button>
                   </li>
                 </ul>
               </div>
