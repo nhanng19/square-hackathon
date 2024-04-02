@@ -10,7 +10,6 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { UserButton } from "@clerk/nextjs";
 const MenuBar = () => {
   return (
     <Sheet>
@@ -50,7 +49,7 @@ const MenuBar = () => {
           <div className="hidden w-full md:block md:w-auto" id="navbar-default">
             <ul className="justify-center items-center font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg  md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0">
               <li>
-                <UserButton />
+
               </li>
               <li>
                 <ModeToggle />

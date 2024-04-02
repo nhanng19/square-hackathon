@@ -6,7 +6,6 @@ import { cn } from "@/lib/utils";
 import MenuBar from "@/components/shared/MenuBar";
 import NextTopLoader from "nextjs-toploader";
 import Sidebar from "@/components/shared/Sidebar";
-import { ClerkProvider } from "@clerk/nextjs";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -24,7 +23,6 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
       <html lang="en" suppressHydrationWarning>
         <body
           className={cn(
@@ -46,6 +44,5 @@ export default function RootLayout({
           </ThemeProvider>
         </body>
       </html>
-    </ClerkProvider>
   );
 }
