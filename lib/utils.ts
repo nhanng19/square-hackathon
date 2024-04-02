@@ -1,11 +1,20 @@
-import { type ClassValue, clsx } from "clsx"
-import { twMerge } from "tailwind-merge"
+import { type ClassValue, clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
 import crypto, { pbkdf2Sync } from "crypto";
 import { SignJWT } from "jose";
-import { AppError, BadRequestError, DatabaseError, ForbiddenError, InternalServerError, NotFoundError,  UnauthorizedError } from '../types'
-import { NextApiResponse } from 'next'
+import {
+  AppError,
+  BadRequestError,
+  DatabaseError,
+  ForbiddenError,
+  InternalServerError,
+  NotFoundError,
+  UnauthorizedError,
+} from "../types";
+import { NextApiResponse } from "next";
+import { NextResponse } from "next/server";
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+  return twMerge(clsx(inputs));
 }
 
 export const createJWT = async (payload: { sub?: string }) => {
@@ -98,36 +107,24 @@ export function validateFormInput<T>(data: Record<string, T>): string[] {
   return missingData;
 }
 
-
-export const errorResponse = (res: NextApiResponse, err: any) => {
+export const errorResponse = ( err: any) => {
   switch (true) {
     case err instanceof BadRequestError:
-      return res.status(err.statusCode).json({
-        message: err.message
-      })
+      return NextResponse.json({ message: err.message });
     case err instanceof UnauthorizedError:
-      return res.status(err.statusCode).json({
-        message: err.message
-      })
+      return NextResponse.json({ message: err.message });
     case err instanceof ForbiddenError:
-      return res.status(err.statusCode).json({
-        message: err.message
-      })
+      return NextResponse.json({ message: err.message });
     case err instanceof NotFoundError:
-      return res.status(err.statusCode).json({
-        message: err.message
-      })
+      return NextResponse.json({ message: err.message });
     case err instanceof DatabaseError:
-      return res.status(err.statusCode).json({
-        message: err.message
-      })
+      return NextResponse.json({ message: err.message });
     case err instanceof InternalServerError:
-      return res.status(err.statusCode).json({
-        message: err.message
-      })
+      return NextResponse.json({ message: err.message });
     default:
-      return res.status(500).json({
-        message: 'Internal Server Error'
-      })
+      return NextResponse.json(
+        { message: "Internal Server Error" },
+        { status: 500 }
+      );
   }
-}
+};

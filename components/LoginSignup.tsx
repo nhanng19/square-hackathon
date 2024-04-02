@@ -38,18 +38,14 @@ const LoginSignup = ({ isLogin }: { isLogin: boolean }) => {
     }
 
     try {
-      await fetchJson("/api/users/authenticate", {
+      await fetch("/api/users/authenticate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
       router.push("/dashboard");
-    } catch (error) {
-      setIsLoading(false);
-      if (error instanceof FetchError) {
-      } else {
-        console.error("An unexpected error happened:", error);
-      }
+    } catch (error: any) {
+      console.log(error);
     }
   };
 
@@ -98,7 +94,7 @@ const LoginSignup = ({ isLogin }: { isLogin: boolean }) => {
           <CardDescription>
             {isLogin
               ? "Enter your email below to log in to your account"
-              : "Just a couple of information to create your SquareEdge account."}
+              : "Just a couple of information to get started."}
           </CardDescription>
         </CardHeader>
         <CardContent>

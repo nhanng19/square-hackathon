@@ -1,4 +1,4 @@
-import { BookOpenCheck, LayoutDashboard, Settings, CopyCheck, Blocks, Star, BadgePlus} from "lucide-react";
+import { BookOpenCheck, LayoutDashboard, Settings, CopyCheck, Blocks, Star, BadgePlus, LogOut} from "lucide-react";
 import { type NavItem } from "@/types";
 
 export const NavItems: NavItem[] = [
@@ -41,6 +41,12 @@ export const NavItems: NavItem[] = [
     href: "/integrations",
     color: "text-sky-500",
   },
+  {
+    title: "Log out",
+    icon: LogOut,
+    href: "/api/users/logout",
+    color: "texst-sky-500"
+  }
 ];
 
 export const SCOPES = ["MERCHANT_PROFILE_READ", "ORDERS_READ"];

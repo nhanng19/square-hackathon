@@ -36,13 +36,12 @@ export async function createUser({
   }
 }
 
-export async function getUserByEmail({
-    email,
-}: { email: string }) { 
-    connectToDB();
-    try {
-        return await User.findOne({ email: email })
-    } catch (error: any) { 
-        throw new Error(`Failed to get user ${error.message}`);
-    }
+export async function getUserByEmail(email: string) {
+  connectToDB();
+  try {
+    const user = await User.findOne({ email: email });
+    return user;
+  } catch (error: any) {
+    throw new Error(`Failed to get user ${error.message}`);
+  }
 }

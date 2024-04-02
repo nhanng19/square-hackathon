@@ -6,21 +6,16 @@ import { NextApiResponse } from "next";
  */
 
 export const setCookie = (
-  res: NextApiResponse,
-  name: string,
-  value: unknown,
+  token: string,
   options: CookieSerializeOptions = {}
 ) => {
-  console.log("Inside setCookie function"); // Add this line
+    const stringValue =
+      typeof token === "object" ? "j:" + JSON.stringify(token) : String(token);
 
-  const stringValue =
-    typeof value === "object" ? "j:" + JSON.stringify(value) : String(value);
-
-  if (typeof options.maxAge === "number") {
-    options.expires = new Date(Date.now() + options.maxAge * 1000);
-  }
-  options.httpOnly = true;
+    if (typeof options.maxAge === "number") {
+      options.expires = new Date(Date.now() + options.maxAge * 1000);
+    }
+    options.httpOnly = true;
   options.path = "/";
-
-  res.setHeader("Set-Cookie", serialize(name, stringValue, options));
+  return serialize("token", stringValue, options);
 };
