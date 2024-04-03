@@ -12,7 +12,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
         { status: 404 }
       );
     }
-    const token = await createJWT({ sub: user?.id });
+    const token = await createJWT({ sub: user?._id.toString() });
     return new NextResponse("", {
       headers: {
         "Set-Cookie": setCookie(token),

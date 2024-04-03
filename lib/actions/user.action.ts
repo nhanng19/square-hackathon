@@ -45,3 +45,15 @@ export async function getUserByEmail(email: string) {
     throw new Error(`Failed to get user ${error.message}`);
   }
 }
+
+
+export async function getUser(id: string | undefined) {
+  connectToDB();
+  try {
+    const user = await User.findOne({ _id: id })
+    console.log(user)
+    return user
+  } catch (error: any) { 
+        throw new Error(`Failed to get user ${error.message}`);
+  }
+}
