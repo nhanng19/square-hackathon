@@ -69,18 +69,22 @@ const LoginSignup = ({ isLogin }: { isLogin: boolean }) => {
       return;
     }
     try {
-      await fetch("/api/users/signup", {
+      const response = await fetch("/api/users/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
-      router.push("/dashboard");
+      const isError = await response.json();
+      console.log(isError)
+      if (isError?.message) {
+       return toast.error(isError?.message);
+      }
     } catch (error) {
       setIsLoading(false);
       if (error instanceof FetchError) {
         toast.error(error.data.message);
       } else {
-        console.error("An unexpected error happened:", error);
+        console.log("An unexpected error happened:", error);
       }
     }
   };
