@@ -30,19 +30,21 @@ const LoginSignup = ({ isLogin }: { isLogin: boolean }) => {
       email: email,
       password: password,
     };
-
     const info = validateFormInput(data);
     if (info.length > 0) {
-      setIsLoading(false);
+      toast.error("Must include: " + info.join(" "));
       return;
     }
-
     try {
-      await fetch("/api/users/authenticate", {
+      const response = await fetch("/api/users/authenticate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
+      const isError = await response.json();
+      if (isError?.message) {
+        return toast.error(isError?.message);
+      }
       router.push("/dashboard");
     } catch (error: any) {
       console.log(error);
@@ -75,10 +77,10 @@ const LoginSignup = ({ isLogin }: { isLogin: boolean }) => {
         body: JSON.stringify(data),
       });
       const isError = await response.json();
-      console.log(isError)
       if (isError?.message) {
        return toast.error(isError?.message);
       }
+      router.push("/dashboard");
     } catch (error) {
       setIsLoading(false);
       if (error instanceof FetchError) {

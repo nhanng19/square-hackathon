@@ -13,7 +13,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
       );
     }
     const token = await createJWT({ sub: user?._id.toString() });
-    return new NextResponse("", {
+    return NextResponse.json("", {
       headers: {
         "Set-Cookie": setCookie(token),
       },
