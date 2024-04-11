@@ -5,7 +5,7 @@ import Crypto from "crypto";
 import { NextRequest, NextResponse } from "next/server";
 import { getUserByEmail } from "@/lib/actions/user.action";
 
-export async function POST(req: any, res: any) {
+export async function POST(req: NextRequest, res: NextResponse) {
   const { email, password, firstName, lastName } = await req.json();
   try {
     let user = await getUserByEmail(email);

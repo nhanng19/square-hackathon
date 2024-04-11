@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 import MenuBar from "@/components/shared/MenuBar";
 import NextTopLoader from "nextjs-toploader";
 import Sidebar from "@/components/shared/Sidebar";
-
+import { SWRProvider } from "@/components/swr-provider";
 const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",
@@ -23,26 +23,26 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-      <html lang="en" suppressHydrationWarning>
-        <body
-          className={cn(
-            "min-h-screen bg-background font-sans antialiased",
-            fontSans.variable
-          )}
-        >
-          <NextTopLoader />
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+    <html lang="en" suppressHydrationWarning>
+      <body
+        className={cn(
+          "min-h-screen bg-background font-sans antialiased",
+          fontSans.variable
+        )}
+      >
+        <NextTopLoader />
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <SWRProvider>
             <MenuBar />
             <div className="flex h-screen border-collapse overflow-hidden">
               <Sidebar />
               <main className="overflow-auto justify-center flex w-full mx-auto pb-4 px-4 md:px-6">
-                <div className="w-full md:max-w-6xl mt-6">
-                  {children}
-                </div>
+                <div className="w-full md:max-w-6xl py-32">{children}</div>
               </main>
             </div>
-          </ThemeProvider>
-        </body>
-      </html>
+          </SWRProvider>
+        </ThemeProvider>
+      </body>
+    </html>
   );
 }

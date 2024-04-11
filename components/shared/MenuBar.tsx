@@ -1,4 +1,5 @@
-import { Button } from "@/components/ui/button";
+"use client"
+
 import { ModeToggle } from "@/components/mode-toggle";
 import Link from "next/link";
 import Logo from "../svg/logo";
@@ -10,8 +11,11 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import useUser from "@/hooks/useUser";
+import UserButton from "../user-button";
 const MenuBar = () => {
+  const { user } = useUser()
   return (
     <Sheet>
       <nav className="bg-background border-b fixed top-0 z-10 w-full">
@@ -50,7 +54,7 @@ const MenuBar = () => {
           <div className="hidden w-full md:block md:w-auto" id="navbar-default">
             <ul className="justify-center items-center font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg  md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0">
               <li>
-
+                <UserButton />
               </li>
               <li>
                 <ModeToggle />

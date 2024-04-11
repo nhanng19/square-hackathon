@@ -8,6 +8,7 @@ export const NavItems: NavItem[] = [
     href: "/dashboard",
     color: "text-sky-500",
   },
+
   {
     title: "Notifications",
     icon: CopyCheck,
@@ -45,8 +46,12 @@ export const NavItems: NavItem[] = [
     title: "Log out",
     icon: LogOut,
     href: "/api/users/logout",
-    color: "texst-sky-500"
-  }
+    color: "texst-sky-500",
+  },
 ];
 
-export const SCOPES = ["MERCHANT_PROFILE_READ", "ORDERS_READ"];
+export const SCOPES = [
+  "MERCHANT_PROFILE_READ",
+  "ORDERS_READ",
+  "ONLINE_STORE_SITE_READ",
+];

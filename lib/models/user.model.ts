@@ -25,17 +25,15 @@ const squareDataSchema = new Schema({
   tokens: String,
   expiresAt: String,
   merchantId: String,
-  userId: { type: String, unique: true },
-  user: { type: Schema.Types.ObjectId, ref: "User" },
+  userId: { type: Schema.Types.ObjectId, ref: "User" },
 });
 
 const metaDataSchema = new Schema({
   id: { type: Number, autoIncrement: true, unique: true },
-  userId: { type: String, unique: true },
+  userId: { type: Schema.Types.ObjectId, ref: "User" },
   iv: String,
   scopes: String,
   squareTokenLastUpdated: { type: Date, default: Date.now },
-  user: { type: Schema.Types.ObjectId, ref: "User" },
 });
 
 export const User = mongoose.models.User || mongoose.model("User", userSchema);

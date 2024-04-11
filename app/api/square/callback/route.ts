@@ -1,53 +1,21 @@
-import { NextApiRequest, NextApiResponse } from "next";
-import { Error } from "square";
-import { SquareData } from "../../../types";
-import { authorizeUser, getUser, updateUser } from "../../../lib/database";
+import { SquareDataType } from "@/types";
+import { authorizeUser, getUser, updateUser } from "@/lib/actions/user.action";
 import { decodeJWT, isString } from "@/utils/helpers";
 import { getOauthClient } from "@/utils/oauth-client";
+import { NextRequest, NextResponse } from "next/server";
 
 // TODO: Confirm this method handles all potential error cases gracefully
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<{ status: string } | { error: string } | Error[]>
+export async function GET(
+  req: NextRequest,
+  res: NextResponse<{ status: string } | { error: string } | Error[]>
 ) {
   // Verify the state to protect against cross-site request forgery.
-  if (req.cookies["square-state"] !== req.query["state"]) {
-    res.status(304).json({ error: "CSRF failed" });
-  } else if (req.query["error"]) {
-    // Check to see if the seller clicked the 'deny' button and handle it as a special case.
-    if (
-        "access_denied" === req.query["error"]
-        &&
-      "user_denied" === req.query["error_description"]
-    ) {
-      const id = await decodeJWT(req);
-      const user = await getUser(id);
-      if (user) {
-        await updateUser({
-          id,
-          user: {
-            ...user,
-            userDeniedSquare: true,
-          },
-        });
-      }
-      res.redirect("/settings");
-    }
-    // Display the error and description for all other errors.
-    else {
-      res
-        .status(400)
-        .json({
-          error: `${req.query["error"]}: ${req.query["error_description"]}`,
-        });
-    }
-  }
   // When the response_type is "code", the seller clicked Allow
   // and the authorization page returned the auth tokens.
-  else if ("code" === req.query["response_type"]) {
-    // Extract the returned authorization code from the URL
-    const { code } = req.query;
 
+    // Extract the returned authorization code from the URL
+    const response = req.nextUrl.searchParams.getAll("code");
+  const code = response[0]
     try {
       // API call to ObtainToken - https://developer.squareup.com/reference/square/oauth-api/obtain-token
       if (!isString(code)) {
@@ -62,7 +30,7 @@ export default async function handler(
         code: code,
         clientId: process.env.APP_ID,
         grantType: "authorization_code",
-        codeVerifier: req.cookies["square-code-verifier"],
+        codeVerifier: req.cookies.get("square-code-verifier")?.value,
       });
 
       // Extract the returned access token from the ObtainTokenResponse object
@@ -70,7 +38,7 @@ export default async function handler(
 
       // Prepare the data to be written to the database
       // NOTE: We will encrypt the access and refresh tokens before storing it.
-      const squareData: SquareData = {
+      const squareData: SquareDataType = {
         tokens: JSON.stringify({
           accessToken,
           refreshToken,
@@ -97,12 +65,11 @@ export default async function handler(
         squareData,
       });
 
-      res.redirect("/dashboard");
+         req.nextUrl.pathname = "/dashboard";
+         return NextResponse.redirect(req.nextUrl);
     } catch (error) {
       // The response from the Obtain Token endpoint did not include an access token. Something went wrong.
       console.log("failed to get token", error);
     }
-  } else {
-    res.send({ status: "bad request" });
-  }
+
 }

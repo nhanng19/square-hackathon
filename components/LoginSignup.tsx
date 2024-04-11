@@ -16,6 +16,7 @@ import { useRouter } from "next/navigation";
 import { validateFormInput } from "@/lib/utils";
 import fetchJson, { FetchError } from "@/lib/fetchson";
 import { toast } from "sonner";
+import { Loader, Loader2 } from "lucide-react";
 const LoginSignup = ({ isLogin }: { isLogin: boolean }) => {
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
@@ -48,6 +49,8 @@ const LoginSignup = ({ isLogin }: { isLogin: boolean }) => {
       router.push("/dashboard");
     } catch (error: any) {
       console.log(error);
+    } finally { 
+      setIsLoading(false)
     }
   };
 
@@ -78,7 +81,7 @@ const LoginSignup = ({ isLogin }: { isLogin: boolean }) => {
       });
       const isError = await response.json();
       if (isError?.message) {
-       return toast.error(isError?.message);
+        return toast.error(isError?.message);
       }
       router.push("/dashboard");
     } catch (error) {
@@ -88,6 +91,8 @@ const LoginSignup = ({ isLogin }: { isLogin: boolean }) => {
       } else {
         console.log("An unexpected error happened:", error);
       }
+    } finally {
+      setIsLoading(false);
     }
   };
   return (
@@ -158,7 +163,7 @@ const LoginSignup = ({ isLogin }: { isLogin: boolean }) => {
               type="submit"
               onClick={isLogin ? loginHandler : signupHandler}
             >
-              {isLogin ? "Log in" : "Create account"}
+              {isLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : isLogin ? "Log in" : "Create account"}
             </Button>
           </div>
           <div className="mt-4 text-center text-sm">
