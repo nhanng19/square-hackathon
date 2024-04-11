@@ -1,15 +1,13 @@
 import type { Metadata } from "next";
 import "../globals.css";
-import { Inter as FontSans } from "next/font/google";
+import { DM_Sans } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import { cn } from "@/lib/utils";
 import TopBar from "@/components/shared/TopBar";
 import NextTopLoader from "nextjs-toploader";
 import { Toaster } from "@/components/ui/sonner";
-const fontSans = FontSans({
-  subsets: ["latin"],
-  variable: "--font-sans",
-});
+
+const fontSans = DM_Sans({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -22,20 +20,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-      <html lang="en" suppressHydrationWarning>
-        <body
-          className={cn(
-            "min-h-screen bg-background font-sans antialiased",
-            fontSans.variable
-          )}
-        >
-          <Toaster richColors position="top-center"/>
-          <NextTopLoader />
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            <TopBar />
-            {children}
-          </ThemeProvider>
-        </body>
-      </html>
+    <html lang="en" suppressHydrationWarning>
+      <body
+        className={cn(
+          "min-h-screen bg-background font-sans antialiased",
+          fontSans.className
+        )}
+      >
+        <Toaster richColors position="top-center" />
+        <NextTopLoader />
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <TopBar />
+          {children}
+        </ThemeProvider>
+      </body>
+    </html>
   );
 }

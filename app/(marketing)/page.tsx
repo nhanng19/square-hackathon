@@ -3,57 +3,50 @@ import { Button } from "@/components/ui/button";
 import { ModeToggle } from "@/components/mode-toggle";
 import Circles from "@/components/svg/circles";
 import Link from "next/link";
+import { ContainerScroll } from "@/components/ui/container-scroll-animation";
+import { InfiniteMovingCards } from "@/components/ui/infinite-moving-cards";
+import { clients, products } from "@/lib/constant";
+import { HeroParallax } from "@/components/connect-parallax";
+import { StickyScroll, squareContent } from "@/components/ui/sticky-scroll-reveal";
 export default function Home() {
   return (
     <>
-      <div className="relative overflow-hidden bg-background pt-[120px] md:pt-[130px] lg:pt-[160px]">
-        <div className="container">
-          <div className="-mx-4 flex flex-wrap items-center">
-            <div className="w-full px-4">
-              <div
-                className="hero-content wow fadeInUp mx-auto max-w-[780px] text-center"
-                data-wow-delay=".2s"
-              >
-                <h1 className="mb-6 text-3xl font-bold leading-snug  sm:text-4xl sm:leading-snug lg:text-5xl lg:leading-[1.2]">
-                  Gain an edge for your Square Online Store.
+      <main className="flex items-center justify-center flex-col">
+        <section className="h-screen w-full  bg-neutral-950 rounded-md  !overflow-visible relative flex flex-col items-center  antialiased">
+        <div className="absolute inset-0  h-full w-full items-center px-5 py-24 [background:radial-gradient(125%_125%_at_50%_10%,#000_35%,#223_100%)]"></div>
+        <div className="flex flex-col mt-[-100px] md:mt-[-50px]">
+          <ContainerScroll
+            titleComponent={
+              <div className="flex items-center flex-col">
+                <Button
+                  size={"lg"}
+                  className="p-8 mb-8 md:mb-0 text-2xl w-full sm:w-fit border-t-2 rounded-full border-[#4D4D4D] bg-[#1F1F1F] hover:bg-white group transition-all flex items-center justify-center gap-4 hover:shadow-xl hover:shadow-neutral-500 duration-500"
+                >
+                  <Link
+                    href="/login"
+                    className="bg-clip-text text-transparent bg-gradient-to-r from-neutral-500 to-neutral-600  md:text-center font-sans group-hover:bg-gradient-to-r group-hover:from-black goup-hover:to-black"
+                  >
+                    Start For Free Today
+                  </Link>
+                </Button>
+                <h1 className="text-5xl md:text-8xl  bg-clip-text text-transparent bg-gradient-to-b from-white to-neutral-600 font-sans font-bold">
+                  Transform Your Square Store Success
                 </h1>
-                <p className="mx-auto mb-9 max-w-[600px] text-base font-medium  sm:text-lg sm:leading-[1.44]">
-                  Elevate your brand, engage your audience, and drive sales like
-                  never before - your online success story starts now.
-                </p>
-                <ul className="mb-10 flex flex-wrap items-center justify-center gap-5">
-                  <li>
-                    <Button variant="default" asChild>
-                      <Link href="/login">Get Started</Link>
-                    </Button>
-                  </li>
-                </ul>
               </div>
-            </div>
-
-            <div className="w-full px-4">
-              <div
-                className="wow fadeInUp relative z-10 mx-auto max-w-[845px]"
-                data-wow-delay=".25s"
-              >
-                <div className="mt-16">
-                  <img
-                    src="/images/hero-image.png"
-                    alt="hero"
-                    className="mx-auto max-w-full rounded-t-xl rounded-tr-xl"
-                  />
-                </div>
-                <div className="absolute -left-9 bottom-0 z-[-1]">
-                  <Circles />
-                </div>
-                <div className="absolute -right-6 -top-6 z-[-1]">
-                  <Circles />
-                </div>
-              </div>
-            </div>
+            }
+          />
           </div>
-        </div>
-      </div>
+        </section>
+        <InfiniteMovingCards
+          className="md:mt-[18rem] mt-[-100px]"
+          items={clients}
+          direction="right"
+          speed="slow"
+        />
+        <section>
+          <HeroParallax products={products}></HeroParallax>
+        </section>
+      </main>
     </>
   );
 }

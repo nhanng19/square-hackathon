@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --experimental-https",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -19,6 +19,7 @@
     "clsx": "^2.1.0",
     "cookie": "^0.6.0",
     "crypto": "^1.0.1",
+    "framer-motion": "^11.0.27",
     "jose": "^5.2.3",
     "lucide-react": "^0.363.0",
     "mongoose": "^8.2.4",
