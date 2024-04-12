@@ -7,13 +7,13 @@ import { isString } from "./helpers";
  * When we make calls to square on behalf of an authorized user, we use getUserClienta
  */
 export const getOauthClient = () => {
-  if (!isString(process.env.ENVIRONMENT)) {
+  if (!isString(process.env.NEXT_PUBLIC_ENVIRONMENT)) {
     console.error("ENVIRONMENT must be set in your .env");
     throw new Error("Server Error");
   }
   const { oAuthApi } = new Client({
     environment:
-      process.env.ENVIRONMENT === "production"
+      process.env.NEXT_PUBLIC_ENVIRONMENT === "production"
         ? Environment.Production
         : Environment.Sandbox,
   });
@@ -25,10 +25,10 @@ export const getOauthClient = () => {
  * we have authorized a user, and we have an access token for them.
  */
 export const getUserClient = (accessToken: string) => {
-  const { locationsApi, merchantsApi, oAuthApi, ordersApi, sitesApi } = new Client({
+  const { locationsApi, merchantsApi, oAuthApi, ordersApi, sitesApi, catalogApi } = new Client({
     accessToken,
     environment:
-      process.env.ENVIRONMENT === "production"
+      process.env.NEXT_PUBLIC_ENVIRONMENT === "production"
         ? Environment.Production
         : Environment.Sandbox,
   });
@@ -37,6 +37,7 @@ export const getUserClient = (accessToken: string) => {
     merchantsApi,
     oAuthApi,
     ordersApi,
-    sitesApi
+    sitesApi,
+    catalogApi
   };
 };

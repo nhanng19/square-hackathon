@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 const { Schema } = mongoose;
 
 const userSchema = new Schema({
-  id: { type: String, unique: true },
+  id: { type: Schema.Types.ObjectId, unique: true },
   email: {
     type: String,
     required: true,

@@ -8,8 +8,6 @@ import {
   CardFooter,
   Card,
 } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import useSWR from "swr";
 import { useState, useEffect } from "react";
 import { Site } from "square";
@@ -18,7 +16,6 @@ import { Badge } from "@/components/ui/badge";
 const Integrations = () => {
   const { data, error } = useSWR("api/sites/list_sites");
   const [sites, setSites] = useState([]);
-  console.log(data);
   useEffect(() => {
     if (data?.sites) {
       setSites(data.sites);

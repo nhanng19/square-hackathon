@@ -7,13 +7,13 @@ import { isString } from "./helpers";
  * We instantiate this client in utils/oauth-client.ts
  */
 export const getOauthClient = () => {
-  if (!isString(process.env.ENVIRONMENT)) {
+  if (!isString(process.env.NEXT_PUBLIC_ENVIRONMENT)) {
     console.error("ENVIRONMENT must be set in your .env");
     throw new Error("Server Error");
   }
   const { oAuthApi } = new Client({
     environment:
-      process.env.ENVIRONMENT === "production"
+      process.env.NEXT_PUBLIC_ENVIRONMENT === "production"
         ? Environment.Production
         : Environment.Sandbox,
   });
