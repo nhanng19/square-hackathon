@@ -1,4 +1,5 @@
 "use client";
+
 import clsx from "clsx";
 import "@stream-io/video-react-sdk/dist/css/styles.css";
 import {
@@ -19,68 +20,93 @@ import {
   ToggleAudioPublishingButton,
   ToggleVideoPublishingButton,
   ScreenShareButton,
-  ReactionsButton
+  ReactionsButton,
 } from "@stream-io/video-react-sdk";
 import { useEffect, useState } from "react";
 import ChatStream from "./chat-stream";
-import { useClient } from "@/hooks/useClient";
 import { NewMessageNotification } from "./new-message-notification";
+import { SidebarContent } from "@/types";
+import { StreamChat } from "stream-chat";
 
-type SidebarContent =
-  | "participants"
-  | "chat"
-  | "stats"
-  | "closed-captions"
-  | null;
-  
+interface Props {
+  roomId: string;
+  host: boolean;
+}
+
 const apiKey = process.env.NEXT_PUBLIC_STREAM_API_KEY!;
-const token = process.env.NEXT_PUBLIC_STREAM_TOKEN!
+const token = process.env.NEXT_PUBLIC_STREAM_TOKEN!;
 const userId = "Darth_Bane";
 
 const user: User = {
   id: userId,
-  name: "Guest",
-  image: "https://getstream.io/random_svg/?id=guest&name=Guest",
+  name: "Nhan Nguyen",
+  image: "https://getstream.io/random_svg/?id=nhan&name=Nhan",
 };
 
-export function VideoStream({ roomId }: { roomId: string }) {
-  const [client, setClient] = useState<StreamVideoClient | null>(null);
-  const [call, setCall] = useState<Call | null>(null);
+const anonUser: User = {
+  id: "jack-guest",
+  type: "guest",
+};
 
-  const chatClient = useClient({
-    apiKey,
-    user,
-    tokenOrProvider: token,
-  });
+export function VideoStream({ roomId, host }: Props) {
+  const [videoClient, setVideoClient] = useState<StreamVideoClient | null>(
+    null
+  );
+  const [call, setCall] = useState<Call | null>(null);
+  const [chatClient, setChatClient] = useState<StreamChat>();
 
   useEffect(() => {
-    if (!roomId) return;
+    if (!roomId && host === undefined) return;
     const client = new StreamVideoClient({
       apiKey,
-      user,
-      token,
+      user: host ? user : anonUser,
+      ...(host && { token }),
     });
     const call = client.call("default", roomId);
     call.join({ create: true });
-    setClient(client);
+    setVideoClient(client);
     setCall(call);
-
     return () => {
       call
         .leave()
         .then(() => client.disconnectUser())
         .catch(console.error);
     };
-  }, [roomId]);
+  }, [roomId, host]);
+
+  
+  useEffect(() => {
+    const client = new StreamChat(apiKey);
+    let didUserConnectInterrupt = false;
+    const connectionPromise = host
+      ? client.connectUser(user, token)
+      : client.setGuestUser(user);
+    
+    connectionPromise.then(() => {
+      if (!didUserConnectInterrupt) {
+        setChatClient(client);
+      }
+    });
+    
+    return () => {
+      didUserConnectInterrupt = true;
+      setChatClient(undefined);
+      connectionPromise
+        .then(() => client.disconnectUser())
+        .then(() => {
+          console.log("connection closed");
+        });
+    };  }, [apiKey, user.id, token]);
 
   const [sidebarContent, setSidebarContent] = useState<SidebarContent>(null);
   const showSidebar = sidebarContent != null;
   const showParticipants = sidebarContent === "participants";
   const showChat = sidebarContent === "chat";
+
   return (
-    client &&
+    videoClient &&
     call && (
-      <StreamVideo client={client}>
+      <StreamVideo client={videoClient}>
         <StreamTheme>
           <StreamCall call={call}>
             <div className="rd__call">
@@ -140,7 +166,7 @@ export function VideoStream({ roomId }: { roomId: string }) {
                 <ScreenShareButton />
                 <ReactionsButton />
                 <SpeakingWhileMutedNotification>
-                  <ToggleAudioPublishingButton />
+                <ToggleAudioPublishingButton />
                 </SpeakingWhileMutedNotification>
                 <ToggleVideoPublishingButton />
                 <CancelCallButton onClick={() => window.close()} />

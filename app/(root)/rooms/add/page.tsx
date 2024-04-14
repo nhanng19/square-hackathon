@@ -37,7 +37,7 @@ const Page = () => {
       process.env.NEXT_PUBLIC_ENVIRONMENT === "production"
         ? process.env.NEXT_PUBLIC_PRODUCTION_BASE_URL
         : process.env.NEXT_PUBLIC_DEVELOPMENT_BASE_URL
-      }video/${productId.replace(/[^\w-]/g, "")}`;
+      }video/${productId.replace(/[^\w-]/g, "")}?host=true`;
     console.log(roomUrl)
     previousWindow = window.open(
       roomUrl,
