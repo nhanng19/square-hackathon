@@ -37,7 +37,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
     );
   }
 
-  const apiUrl = process.env.SQUARE_BASE_URL + "v2/catalog/list";
+  const apiUrl = process.env.SQUARE_BASE_URL + "v2/catalog/list?types=item";
 
   const requestOptions = {
     method: "GET",

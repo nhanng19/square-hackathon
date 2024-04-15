@@ -14,19 +14,12 @@ import {
   Card,
 } from "@/components/ui/card";
 const Dashboard = () => {
-  const [authUrl, setAuthUrl] = useState<any>();
+
   const [hasSquareData, setHasSquareData] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const { data, error } = useSWR<AuthStatus>("/api/square/retrieve_auth_data");
-  const handleAuthUrl = async () => {
-    const response = await fetch("http://localhost:3000/api/square/auth_url");
-    const data = await response.json();
-    setAuthUrl(data);
-  };
+  const { data: authUrl, error: authUrlError } = useSWR("/api/square/auth_url")
 
-  useEffect(() => {
-    handleAuthUrl();
-  }, []);
 
   useEffect(() => {
     if (data?.isAuthed) {
