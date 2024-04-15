@@ -62,7 +62,11 @@ export function VideoStream({ roomId, host }: Props) {
       user: host ? user : anonUser,
       ...(host && { token }),
     });
-    const call = client.call("default", roomId);
+    const call = client.call("livestream", roomId);
+    if (!host) { 
+      call.camera.disable();
+      call.microphone.disable(); 
+    }
     call.join({ create: true });
     setVideoClient(client);
     setCall(call);
@@ -87,7 +91,7 @@ export function VideoStream({ roomId, host }: Props) {
         setChatClient(client);
       }
     });
-    
+
     return () => {
       didUserConnectInterrupt = true;
       setChatClient(undefined);

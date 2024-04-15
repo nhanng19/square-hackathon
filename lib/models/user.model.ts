@@ -2,7 +2,6 @@ import mongoose from "mongoose";
 const { Schema } = mongoose;
 
 const userSchema = new Schema({
-  id: { type: Schema.Types.ObjectId, unique: true },
   email: {
     type: String,
     required: true,
@@ -21,7 +20,6 @@ const userSchema = new Schema({
 });
 
 const squareDataSchema = new Schema({
-  id: { type: Number, autoIncrement: true, unique: true },
   tokens: String,
   expiresAt: String,
   merchantId: String,
@@ -29,7 +27,6 @@ const squareDataSchema = new Schema({
 });
 
 const metaDataSchema = new Schema({
-  id: { type: Number, autoIncrement: true, unique: true },
   userId: { type: Schema.Types.ObjectId, ref: "User" },
   iv: String,
   scopes: String,
