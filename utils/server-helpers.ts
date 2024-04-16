@@ -11,9 +11,7 @@ export const verifyJWT = async (req: NextRequest): Promise<boolean> => {
     console.error("JWT_SIGNING_SECRET is not set - check .env file");
     throw new InternalServerError("Server Error", 500);
   }
-  const cookieHeader = req?.headers.get("cookie");
-  const token = cookieHeader?.split("=")[1];
-
+  const token = req?.cookies?.get("token")?.value;
   if (token == undefined) return false;
   try {
     await verify(token, process.env.JWT_SIGNING_SECRET);
@@ -125,3 +123,36 @@ export function validateFormInput<T>(data: Record<string, T>): string[] {
 export function isString(value: unknown): value is string {
   return typeof value === "string";
 }
+
+export const deauthorizeToken = async ({
+  user,
+  revokeOnlyAccessToken,
+}: {
+  user: any;
+  revokeOnlyAccessToken: boolean;
+}) => {
+  try {
+    if (!user?.squareData?.tokens || !user?.metaData?.iv) {
+      throw new Error("User data error");
+    }
+    const { accessToken } = decryptToken(
+      user?.squareData?.tokens,
+      user?.metaData?.iv
+    );
+
+    const properClientSecret = "Client " + process.env.APPLICATION_SECRET;
+    const oAuthApi = getOauthClient();
+    const { result } = await oAuthApi.revokeToken(
+      {
+        clientId: process.env.APP_ID,
+        accessToken,
+        revokeOnlyAccessToken,
+      },
+      properClientSecret
+    );
+    return result;
+  } catch (error) {
+    console.error("error", error);
+    throw new InternalServerError("Error deauthorizing token", 500);
+  }
+};

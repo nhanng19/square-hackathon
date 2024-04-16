@@ -9,7 +9,6 @@ import {
   CardFooter,
   Card,
 } from "@/components/ui/card";
-import { MoreHorizontal } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -38,7 +37,6 @@ const Page = () => {
         ? process.env.NEXT_PUBLIC_PRODUCTION_BASE_URL
         : process.env.NEXT_PUBLIC_DEVELOPMENT_BASE_URL
       }video/${productId.replace(/[^\w-]/g, "")}?host=true`;
-    console.log(roomUrl)
     previousWindow = window.open(
       roomUrl,
       "_blank",

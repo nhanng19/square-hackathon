@@ -7,6 +7,7 @@ import MenuBar from "@/components/shared/MenuBar";
 import NextTopLoader from "nextjs-toploader";
 import Sidebar from "@/components/shared/Sidebar";
 import { SWRProvider } from "@/components/swr-provider";
+import { Toaster } from "sonner";
 const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",
@@ -34,6 +35,7 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <SWRProvider>
             <MenuBar />
+            <Toaster richColors position="top-center" />
             <div className="flex h-screen border-collapse overflow-hidden">
               <Sidebar />
               <main className="overflow-auto justify-center flex w-full mx-auto pb-4 px-4 md:px-6">

@@ -11,9 +11,7 @@ export const verifyJWT = async (req: NextRequest): Promise<boolean> => {
     console.error("JWT_SIGNING_SECRET is not set - check .env file");
     throw new InternalServerError("Server Error", 500);
   }
-  const cookieHeader = req?.headers.get("cookie");
-  const token = cookieHeader?.split("=")[1];
-
+  const token = req?.cookies?.get("token")?.value;
   if (token == undefined) return false;
   try {
     await verify(token, process.env.JWT_SIGNING_SECRET);
