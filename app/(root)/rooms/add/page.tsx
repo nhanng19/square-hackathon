@@ -20,6 +20,9 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { formatMoney } from "@/utils/server-helpers";
+import { toast } from "sonner";
+import { createRoom } from "@/lib/actions/room.action";
+import { encodeRoomId } from "@/utils/helpers";
 
 const Page = () => {
   const { data, error } = useSWR("/api/catalogs/list_catalogs");
@@ -30,21 +33,30 @@ const Page = () => {
     }
   }, [data]);
 
-  const handleOpenStream = (productId : string) => { 
-    const newWindowFeatures = "width=500,height=1000,left=100,top=100";
-    const roomUrl = `${
-      process.env.NEXT_PUBLIC_ENVIRONMENT === "production"
-        ? process.env.NEXT_PUBLIC_PRODUCTION_BASE_URL
-        : process.env.NEXT_PUBLIC_DEVELOPMENT_BASE_URL
-      }video/${productId.replace(/[^\w-]/g, "")}?host=true`;
-    previousWindow = window.open(
-      roomUrl,
-      "_blank",
-      newWindowFeatures
-    );
-  }
+  const handleOpenStream = async (productName : string, productDescription : string, price : string, productUrl : string) => {
+    try {
+      const roomId = encodeRoomId(productName);
+      await createRoom({
+        roomId,
+        productName,
+        productDescription,
+        price,
+        productUrl,
+        activeUsers: 0
+      })
+      const newWindowFeatures = "width=500,height=1000,left=100,top=100";
+      const roomUrl = `${
+        process.env.NEXT_PUBLIC_ENVIRONMENT === "production"
+          ? process.env.NEXT_PUBLIC_PRODUCTION_BASE_URL
+          : process.env.NEXT_PUBLIC_DEVELOPMENT_BASE_URL
+      }video/${roomId}?host=true`;
+      previousWindow = window.open(roomUrl, "_blank", newWindowFeatures);
+    } catch (error) {
+      toast.error(`${error}`);
+    }
+  };
 
-let previousWindow = null;
+  let previousWindow = null;
   return (
     <div className="flex flex-col w-full gap-4">
       <Card>
@@ -113,7 +125,18 @@ let previousWindow = null;
                         {date}
                       </TableCell>
                       <TableCell>
-                        <Button onClick={() => handleOpenStream(itemData.name)}>Start</Button>
+                        <Button
+                          onClick={() =>
+                            handleOpenStream(
+                              itemData.name,
+                              itemData.description,
+                              formatMoney(price, currency), 
+                              itemData.ecom_uri
+                            )
+                          }
+                        >
+                          Start
+                        </Button>
                       </TableCell>
                     </TableRow>
                   );

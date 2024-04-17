@@ -35,3 +35,19 @@ export const decodeJWT = (req: NextRequest): string | undefined => {
   }
 };
 
+export const encodeRoomId = (roomId: string): string => { 
+  var encodedString = "";
+  for (var i = 0; i < roomId.length; i++) encodedString += roomId.charCodeAt(i).toString(16);
+  encodedString = encodedString.substr(0, 64);
+  return encodedString;
+} 
+
+export const decodeRoomId = (roomId: string): string => {
+    var decodedString = "";
+    for (var i = 0; i < roomId.length; i += 2) {
+      decodedString += String.fromCharCode(
+        parseInt(roomId.substr(i, 2), 16)
+      );
+    }
+    return decodedString;
+}; 

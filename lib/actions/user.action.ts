@@ -1,5 +1,5 @@
 "use server";
-import { connect } from "http2";
+
 import { connectToDB } from "../mongoose";
 import { MetaData, SquareData, User } from "../models/user.model";
 import { DBUser, MetaDataType, SquareDataType } from "@/types/user";
@@ -7,6 +7,7 @@ import { isString } from "@/utils/helpers";
 import { encryptToken } from "@/utils/server-helpers";
 import { SCOPES } from "@/constants";
 import mongoose from "mongoose";
+
 interface Params {
   email: string;
   password: string;
