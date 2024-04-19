@@ -1,6 +1,7 @@
 import { verifyJWT, decodeJWT} from "@/utils/helpers";
 import { NextRequest, NextResponse } from "next/server";
 import { getUser } from "@/lib/actions/user.action";
+import { errorResponse } from "@/lib/utils";
 
 export async function GET(req: NextRequest, res: NextResponse) {
     try {
@@ -9,6 +10,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
         const user = await getUser(decodeJWT(req));
       return NextResponse.json(
         {
+          userId: user?._id,
           username: user?.email,
           firstName: user?.firstName,
           lastName: user?.lastName,
@@ -18,6 +20,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
       );
     } else {
       return NextResponse.json({
+        userId: "",
         username: "",
         firstName: "",
         lastName: "",
@@ -25,6 +28,6 @@ export async function GET(req: NextRequest, res: NextResponse) {
       });
     }
     } catch (error: any) { 
-
+      return errorResponse(error)
     }
 }

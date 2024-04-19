@@ -27,6 +27,8 @@ import ChatStream from "./chat-stream";
 import { NewMessageNotification } from "./new-message-notification";
 import { SidebarContent } from "@/types";
 import { StreamChat } from "stream-chat";
+import { toast } from "sonner";
+import fetchJson from "@/lib/fetchson";
 
 interface Props {
   roomId: string;
@@ -35,7 +37,7 @@ interface Props {
 
 const apiKey = process.env.NEXT_PUBLIC_STREAM_API_KEY!;
 const token = process.env.NEXT_PUBLIC_STREAM_TOKEN!;
-const userId = "Darth_Bane";
+const userId = process.env.NEXT_PUBLIC_STREAM_USER_ID!;
 
 const user: User = {
   id: userId,
@@ -62,10 +64,10 @@ export function VideoStream({ roomId, host }: Props) {
       user: host ? user : anonUser,
       ...(host && { token }),
     });
-    const call = client.call("livestream", roomId);
-    if (!host) { 
+    const call = client.call("default", roomId);
+    if (!host) {
       call.camera.disable();
-      call.microphone.disable(); 
+      call.microphone.disable();
     }
     call.join({ create: true });
     setVideoClient(client);
@@ -78,14 +80,13 @@ export function VideoStream({ roomId, host }: Props) {
     };
   }, [roomId, host]);
 
-  
   useEffect(() => {
     const client = new StreamChat(apiKey);
     let didUserConnectInterrupt = false;
     const connectionPromise = host
       ? client.connectUser(user, token)
       : client.setGuestUser(user);
-    
+
     connectionPromise.then(() => {
       if (!didUserConnectInterrupt) {
         setChatClient(client);
@@ -100,12 +101,28 @@ export function VideoStream({ roomId, host }: Props) {
         .then(() => {
           console.log("connection closed");
         });
-    };  }, [apiKey, user.id, token]);
+    };
+  }, [apiKey, user.id, token]);
 
   const [sidebarContent, setSidebarContent] = useState<SidebarContent>(null);
   const showSidebar = sidebarContent != null;
   const showParticipants = sidebarContent === "participants";
   const showChat = sidebarContent === "chat";
+
+  const handleLeaveCall = async () => {
+    try {
+      const data = await fetchJson(`/api/rooms/delete_room/${roomId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+    } catch (error) {
+      return toast.error(`${error}`);
+    } finally {
+      window.close();
+    }
+  };
 
   return (
     videoClient &&
@@ -170,10 +187,10 @@ export function VideoStream({ roomId, host }: Props) {
                 <ScreenShareButton />
                 <ReactionsButton />
                 <SpeakingWhileMutedNotification>
-                <ToggleAudioPublishingButton />
+                  <ToggleAudioPublishingButton />
                 </SpeakingWhileMutedNotification>
                 <ToggleVideoPublishingButton />
-                <CancelCallButton onClick={() => window.close()} />
+                <CancelCallButton onClick={handleLeaveCall} />
               </div>
               <div className="flex center gap-2 items-center justify-end flex-1">
                 <CompositeButton

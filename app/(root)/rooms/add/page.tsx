@@ -1,4 +1,5 @@
 "use client";
+
 import { useEffect, useState } from "react";
 import useSWR from "swr";
 import {
@@ -19,42 +20,24 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { formatMoney } from "@/utils/server-helpers";
 import { toast } from "sonner";
 import { createRoom } from "@/lib/actions/room.action";
 import { encodeRoomId } from "@/utils/helpers";
+import useUser from "@/hooks/useUser";
+import StreamLoadingScreen from "@/components/stream-loading-screen";
 
 const Page = () => {
   const { data, error } = useSWR("/api/catalogs/list_catalogs");
   const [products, setProducts] = useState([]);
+  const { user } = useUser();
   useEffect(() => {
     if (data?.objects) {
       setProducts(data.objects);
     }
   }, [data]);
 
-  const handleOpenStream = async (productName : string, productDescription : string, price : string, productUrl : string) => {
-    try {
-      const roomId = encodeRoomId(productName);
-      await createRoom({
-        roomId,
-        productName,
-        productDescription,
-        price,
-        productUrl,
-        activeUsers: 0
-      })
-      const newWindowFeatures = "width=500,height=1000,left=100,top=100";
-      const roomUrl = `${
-        process.env.NEXT_PUBLIC_ENVIRONMENT === "production"
-          ? process.env.NEXT_PUBLIC_PRODUCTION_BASE_URL
-          : process.env.NEXT_PUBLIC_DEVELOPMENT_BASE_URL
-      }video/${roomId}?host=true`;
-      previousWindow = window.open(roomUrl, "_blank", newWindowFeatures);
-    } catch (error) {
-      toast.error(`${error}`);
-    }
-  };
 
   let previousWindow = null;
   return (
@@ -125,18 +108,22 @@ const Page = () => {
                         {date}
                       </TableCell>
                       <TableCell>
-                        <Button
-                          onClick={() =>
-                            handleOpenStream(
-                              itemData.name,
-                              itemData.description,
-                              formatMoney(price, currency), 
-                              itemData.ecom_uri
-                            )
-                          }
-                        >
-                          Start
-                        </Button>
+                        <Dialog>
+                          <DialogTrigger asChild>
+                            <Button>
+                              Start
+                            </Button>
+                          </DialogTrigger>
+                          <DialogContent className="min-w-full !h-screen">
+                            <StreamLoadingScreen
+                              userId={user?.userId as string}
+                              productName={itemData.name}
+                              productDescription={itemData.description}
+                              price={formatMoney(price, currency)}
+                              productUrl={itemData.ecom_uri}
+                            />
+                          </DialogContent>
+                        </Dialog>
                       </TableCell>
                     </TableRow>
                   );

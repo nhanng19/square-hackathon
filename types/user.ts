@@ -21,6 +21,7 @@ export interface CreateUser {
 }
 
 export interface BasicUserData {
+  userId: string;
   username: string;
   firstName: string;
   lastName: string;

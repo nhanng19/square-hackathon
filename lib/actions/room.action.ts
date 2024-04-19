@@ -47,3 +47,13 @@ export const getRooms = async (userId : string) => {
     throw new Error(`Failed to create room: ${error}`)
   }
 }
+
+export const deleteRoom = async (roomId: string) => { 
+  connectToDB();
+  try {
+    console.log("hello")
+    return await Room.deleteOne({ roomId: roomId })
+  } catch (error) { 
+    throw new Error(`Failed to delete room ${error}`)
+  }
+}
