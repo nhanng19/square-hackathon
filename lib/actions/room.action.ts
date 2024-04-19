@@ -4,6 +4,7 @@ import Room  from "../models/room.model";
 import { connectToDB } from "../mongoose";
 
 export interface RoomProps {
+  userId: string;
   roomId: string;
   productName: string;
   productDescription: string;
@@ -13,6 +14,7 @@ export interface RoomProps {
 }
 
 export const createRoom = async ({
+  userId,
   roomId,
   productName,
   productDescription,
@@ -23,6 +25,7 @@ export const createRoom = async ({
   connectToDB();
   try {
     return await Room.create({
+      userId,
       roomId,
       productName,
       productDescription,
@@ -34,3 +37,13 @@ export const createRoom = async ({
     throw new Error(`Failed to create room: ${error}`);
   }
 };
+
+export const getRooms = async (userId : string) => { 
+  connectToDB();
+  try {
+    const rooms = await Room.find({ userId: userId });
+    return rooms;
+  } catch (error) { 
+    throw new Error(`Failed to create room: ${error}`)
+  }
+}

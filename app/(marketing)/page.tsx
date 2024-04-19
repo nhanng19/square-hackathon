@@ -18,15 +18,26 @@ export default function Home() {
             <ContainerScroll
               titleComponent={
                 <div className="flex items-center flex-col">
-                  <Link href={"/login"}><button className="px-8 py-2 rounded-full bg-gradient-to-b from-blue-500 to-blue-600 text-white focus:ring-2 focus:ring-blue-400 hover:shadow-xl transition duration-200">
-                    Start for free today
-                  </button></Link>
+                  <Link href={"/login"}>
+                    <button className="px-8 py-2 rounded-full bg-gradient-to-b from-blue-500 to-blue-600 text-white focus:ring-2 focus:ring-blue-400 hover:shadow-xl transition duration-200">
+                      Start for free today
+                    </button>
+                  </Link>
                   <h1 className="text-5xl md:text-8xl  bg-clip-text text-transparent bg-gradient-to-b from-white to-neutral-600 font-sans font-bold">
                     Transform Your Square Store Success
                   </h1>
                 </div>
               }
-            />
+            >
+              <Image
+                src="/images/hero-image.png"
+                alt="hero"
+                height={720}
+                width={1400}
+                className="mx-auto rounded-2xl object-cover h-full object-left-top"
+                draggable={false}
+              />
+            </ContainerScroll>
           </div>
         </section>
         <InfiniteMovingCards
