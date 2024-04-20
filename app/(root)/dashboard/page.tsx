@@ -16,6 +16,7 @@ import {
   WelcomeToSquare,
 } from "@/components/tasks-component";
 import useUser from "@/hooks/useUser";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const Dashboard = () => {
   const [hasSquareData, setHasSquareData] = useState<boolean>(false);
@@ -35,16 +36,24 @@ const Dashboard = () => {
     }
   }, [data, error]);
 
+  const DashboardData = () => {
+    return !hasSquareData ? (
+      <>
+        <Task task={WelcomeToSquare(user?.firstName, user?.lastName)} />
+        <Task task={ConnectToSquare()} />
+      </>
+    ) : (
+      <Task task={ConnectedToSquare()} />
+    );
+  };
+
   return (
     <>
       <h1 className="font-bold mb-4 text-3xl">Dashboard</h1>
-      {hasSquareData ? (
-        <Task task={ConnectedToSquare()} />
+      {isLoading ? (
+        <Skeleton className="h-[100px] w-full rounded-xl" />
       ) : (
-        <div className="flex flex-col gap-4">
-          <Task task={WelcomeToSquare(user?.firstName, user?.lastName)} />
-          <Task task={ConnectToSquare()} />
-        </div>
+        <DashboardData />
       )}
     </>
   );

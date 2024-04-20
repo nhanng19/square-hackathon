@@ -22,13 +22,11 @@ const StreamLoadingScreen = ({
   price,
   productUrl,
 }: Props) => {
-  const [fetch, shouldFetch] = useState<boolean>(true);
 
   let previousWindow = null;
 
   const handleOpenStream = async () => {
     try {
-      if (fetch) {
         const roomId = encodeRoomId(productName);
         await createRoom({
           userId,
@@ -39,15 +37,13 @@ const StreamLoadingScreen = ({
           productUrl,
           activeUsers: 0,
         });
-        const newWindowFeatures = "width=500,height=1000,left=100,top=100";
+        const newWindowFeatures = "left=100,top=100";
         const roomUrl = `${
           process.env.NEXT_PUBLIC_ENVIRONMENT === "production"
             ? process.env.NEXT_PUBLIC_PRODUCTION_BASE_URL
             : process.env.NEXT_PUBLIC_DEVELOPMENT_BASE_URL
         }video/${roomId}?host=true`;
-          previousWindow = window.open(roomUrl, "_blank", newWindowFeatures);
-          shouldFetch(false);
-      }
+        previousWindow = window.open(roomUrl, "_blank", newWindowFeatures);
     } catch (error) {
       toast.error(`${error}`);
     }
@@ -55,7 +51,7 @@ const StreamLoadingScreen = ({
 
   useEffect(() => {
     handleOpenStream();
-  }, [fetch]);
+  }, []);
 
   return (
     <div className="flex flex-col items-center justify-center w-full h-full gap-4">
@@ -67,7 +63,7 @@ const StreamLoadingScreen = ({
           Your livestream has been launched in the SquareEdge browser.
         </h1>
         <span className="font-normal">Don't see your meeting?</span>
-        <Button variant="default">Start livestream</Button>
+        <Button variant="default" onClick={handleOpenStream}>Start livestream</Button>
       </div>
     </div>
   );

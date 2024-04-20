@@ -24,6 +24,10 @@ export const createRoom = async ({
 }: RoomProps) => {
   connectToDB();
   try {
+    const existingRoom = await Room.findOne({ roomId });
+    if (existingRoom) {
+      throw new Error(`Room with roomId ${roomId} already exists.`);
+    }
     return await Room.create({
       userId,
       roomId,
@@ -51,7 +55,7 @@ export const getRooms = async (userId : string) => {
 export const deleteRoom = async (roomId: string) => { 
   connectToDB();
   try {
-    console.log("hello")
+
     return await Room.deleteOne({ roomId: roomId })
   } catch (error) { 
     throw new Error(`Failed to delete room ${error}`)

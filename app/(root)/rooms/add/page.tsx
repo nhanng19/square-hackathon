@@ -22,9 +22,6 @@ import {
 } from "@/components/ui/table";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { formatMoney } from "@/utils/server-helpers";
-import { toast } from "sonner";
-import { createRoom } from "@/lib/actions/room.action";
-import { encodeRoomId } from "@/utils/helpers";
 import useUser from "@/hooks/useUser";
 import StreamLoadingScreen from "@/components/stream-loading-screen";
 
@@ -38,10 +35,8 @@ const Page = () => {
     }
   }, [data]);
 
-
-  let previousWindow = null;
   return (
-    <div className="flex flex-col w-full gap-4">
+    <div className="flex flex-col h-full w-full gap-4 ">
       <Card>
         <CardHeader>
           <CardTitle>Start a sales room</CardTitle>
@@ -110,9 +105,7 @@ const Page = () => {
                       <TableCell>
                         <Dialog>
                           <DialogTrigger asChild>
-                            <Button>
-                              Start
-                            </Button>
+                            <Button>Start</Button>
                           </DialogTrigger>
                           <DialogContent className="min-w-full !h-screen">
                             <StreamLoadingScreen

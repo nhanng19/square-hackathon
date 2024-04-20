@@ -10,6 +10,7 @@ export interface Props {
 }
 
 const Task = ({ task }: { task: Props }) => {
+  if (task)
   return (
     <Card x-chunk="dashboard-04-chunk-1">
       <CardHeader>

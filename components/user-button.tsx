@@ -7,7 +7,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 const UserButton = () => {
     const { user } = useUser();
-    console.log(user)
     return (
       <DropdownMenu>
         <DropdownMenuTrigger asChild>

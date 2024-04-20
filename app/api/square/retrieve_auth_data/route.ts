@@ -7,7 +7,6 @@ export async function GET(req: NextRequest, res: NextResponse) {
   if (!verifyJWT(req)) {
     return NextResponse.json({ status: 403 });
   }
-  
   const id = decodeJWT(req);
   const user = await getUser(id);
   const isAuthed = user?.squareData ? true : false;
