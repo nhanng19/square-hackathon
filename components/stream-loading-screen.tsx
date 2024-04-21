@@ -10,40 +10,32 @@ import { Button } from "./ui/button";
 interface Props {
   userId: string;
   productName: string;
-  productDescription: string;
-  price: string;
-  productUrl: string;
+  catalogId: string;
 }
 
 const StreamLoadingScreen = ({
   userId,
   productName,
-  productDescription,
-  price,
-  productUrl,
+  catalogId
 }: Props) => {
-
   let previousWindow = null;
 
   const handleOpenStream = async () => {
     try {
-        const roomId = encodeRoomId(productName);
-        await createRoom({
-          userId,
-          roomId,
-          productName,
-          productDescription,
-          price,
-          productUrl,
-          activeUsers: 0,
-        });
-        const newWindowFeatures = "left=100,top=100";
-        const roomUrl = `${
-          process.env.NEXT_PUBLIC_ENVIRONMENT === "production"
-            ? process.env.NEXT_PUBLIC_PRODUCTION_BASE_URL
-            : process.env.NEXT_PUBLIC_DEVELOPMENT_BASE_URL
-        }video/${roomId}?host=true`;
-        previousWindow = window.open(roomUrl, "_blank", newWindowFeatures);
+      const roomId = encodeRoomId(productName);
+      await createRoom({
+        userId,
+        roomId,
+        catalogId,
+        activeUsers: 0,
+      });
+      const newWindowFeatures = "left=100,top=100";
+      const roomUrl = `${
+        process.env.NEXT_PUBLIC_ENVIRONMENT === "production"
+          ? process.env.NEXT_PUBLIC_PRODUCTION_BASE_URL
+          : process.env.NEXT_PUBLIC_DEVELOPMENT_BASE_URL
+      }video/${roomId}?host=true`;
+      previousWindow = window.open(roomUrl, "_blank", newWindowFeatures);
     } catch (error) {
       toast.error(`${error}`);
     }
@@ -63,7 +55,9 @@ const StreamLoadingScreen = ({
           Your livestream has been launched in the SquareEdge browser.
         </h1>
         <span className="font-normal">Don't see your meeting?</span>
-        <Button variant="default" onClick={handleOpenStream}>Start livestream</Button>
+        <Button variant="default" onClick={handleOpenStream}>
+          Start livestream
+        </Button>
       </div>
     </div>
   );

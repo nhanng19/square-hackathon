@@ -36,102 +36,66 @@ const Page = () => {
   }, [data]);
 
   return (
-    <div className="flex flex-col h-full w-full gap-4 ">
-      <Card>
-        <CardHeader>
-          <CardTitle>Start a sales room</CardTitle>
-          <CardDescription>
-            Select one of your products to start a live, virtual sales room.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="hidden w-[100px] sm:table-cell">
-                  <span className="sr-only">Image</span>
-                </TableHead>
-                <TableHead>Name</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead className="hidden md:table-cell">Price</TableHead>
-                <TableHead className="hidden md:table-cell">
-                  Visibility
-                </TableHead>
-                <TableHead className="hidden md:table-cell">
-                  Updated at
-                </TableHead>
-                <TableHead>
-                  <span className="sr-only">Actions</span>
-                </TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {products.length > 0 &&
-                products.map((product: any) => {
-                  const itemData = product.item_data;
-                  const price =
-                    itemData.variations[0].item_variation_data.price_money
-                      .amount;
-                  const currency =
-                    itemData.variations[0].item_variation_data.price_money
-                      .currency;
-                  const date = new Date(product.updated_at).toLocaleString();
-                  return (
-                    <TableRow>
-                      <TableCell className="hidden sm:table-cell">
-                        <img
-                          alt="Product image"
-                          className="aspect-square rounded-md object-cover"
-                          height="64"
-                          src={itemData.ecom_image_uris}
-                          width="64"
-                        />
-                      </TableCell>
-                      <TableCell className="font-medium">
-                        {itemData.name}
-                      </TableCell>
-                      <TableCell>
-                        <Badge variant="outline">Draft</Badge>
-                      </TableCell>
-                      <TableCell className="hidden md:table-cell">
-                        {formatMoney(price, currency)}
-                      </TableCell>
-                      <TableCell className="hidden md:table-cell">
-                        {itemData.ecom_visibility}
-                      </TableCell>
-                      <TableCell className="hidden md:table-cell">
-                        {date}
-                      </TableCell>
-                      <TableCell>
-                        <Dialog>
-                          <DialogTrigger asChild>
-                            <Button>Start</Button>
-                          </DialogTrigger>
-                          <DialogContent className="min-w-full !h-screen">
-                            <StreamLoadingScreen
-                              userId={user?.userId as string}
-                              productName={itemData.name}
-                              productDescription={itemData.description}
-                              price={formatMoney(price, currency)}
-                              productUrl={itemData.ecom_uri}
-                            />
-                          </DialogContent>
-                        </Dialog>
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
-            </TableBody>
-          </Table>
-        </CardContent>
-        <CardFooter>
-          <div className="text-xs text-muted-foreground">
-            Showing <strong>1-10</strong> of <strong>{products.length}</strong>{" "}
-            products
-          </div>
-        </CardFooter>
-      </Card>
-    </div>
+    <>
+      <h1 className="font-bold mb-4 text-3xl">Start a virtual sales room</h1>
+      <div className="grid grid-cols-3 h-full w-full gap-4 ">
+        {products.length > 0 &&
+          products.map((product: any) => {
+            const itemData = product.item_data;
+            const price =
+              itemData.variations[0].item_variation_data.price_money.amount;
+            const currency =
+              itemData.variations[0].item_variation_data.price_money.currency;
+            const date = new Date(product.updated_at).toLocaleString();
+            return (
+              <div className="relative block overflow-hidden rounded-lg border  p-4 sm:p-6 lg:p-8 bg-background">
+                <span className="absolute inset-x-0 bottom-0 h-2 "></span>
+
+                <div className="sm:flex sm:justify-between sm:gap-4">
+                  <div>
+                    <h3 className="text-lg font-bold sm:text-xl line-clamp-1">
+                      {itemData.name}
+                    </h3>
+
+                    <p className="mt-1 text-xs font-medium ">
+                      {formatMoney(price, currency)}
+                    </p>
+                  </div>
+
+                  <div className="hidden sm:block sm:shrink-0">
+                    <img
+                      alt=""
+                      src={itemData.ecom_image_uris}
+                      className="size-16 rounded-lg object-cover shadow-sm"
+                    />
+                  </div>
+                </div>
+
+                <div className="mt-4">
+                  <p className="text-pretty text-sm line-clamp-3">
+                    {itemData.description}
+                  </p>
+                </div>
+
+                <dl className="mt-6 flex gap-4 sm:gap-6 justify-end">
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <Button>Go Live</Button>
+                    </DialogTrigger>
+                    <DialogContent className="min-w-full !h-screen">
+                      <StreamLoadingScreen
+                        userId={user?.userId as string}
+                        productName={itemData.name}
+                        catalogId={product.id}
+                      />
+                    </DialogContent>
+                  </Dialog>
+                </dl>
+              </div>
+            );
+          })}
+      </div>
+    </>
   );
 };
 

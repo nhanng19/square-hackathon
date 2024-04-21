@@ -6,20 +6,14 @@ import { connectToDB } from "../mongoose";
 export interface RoomProps {
   userId: string;
   roomId: string;
-  productName: string;
-  productDescription: string;
-  price: string;
-  productUrl: string;
+  catalogId: string;
   activeUsers: number;
 }
 
 export const createRoom = async ({
   userId,
   roomId,
-  productName,
-  productDescription,
-  price,
-  productUrl,
+  catalogId,
   activeUsers,
 }: RoomProps) => {
   connectToDB();
@@ -31,10 +25,7 @@ export const createRoom = async ({
     return await Room.create({
       userId,
       roomId,
-      productName,
-      productDescription,
-      price,
-      productUrl,
+      catalogId,
       activeUsers,
     });
   } catch (error) {
@@ -49,6 +40,16 @@ export const getRooms = async (userId : string) => {
     return rooms;
   } catch (error) { 
     throw new Error(`Failed to create room: ${error}`)
+  }
+}
+
+export const getRoomById = async (roomId: string) => { 
+  connectToDB();
+  try {
+    const room = await Room.findOne({ roomId: roomId });
+    return room;
+  } catch (error) { 
+    throw new Error(`Failed to get room: ${error}`)
   }
 }
 

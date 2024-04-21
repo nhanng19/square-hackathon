@@ -28,7 +28,7 @@ export const createJWT = async (payload: { sub?: string }) => {
     const exp = iat + 60 * 60 * 24 * 7; // 7 days
     return await new SignJWT({ ...payload })
       .setProtectedHeader({
-        alg: "HS256",
+      alg: "HS256",
         typ: "JWT",
       })
       .setExpirationTime(exp)

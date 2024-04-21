@@ -5,6 +5,7 @@ import useSWR from "swr";
 import { SCOPES } from "@/constants";
 import Logo from "./svg/logo";
 import { Loader2 } from "lucide-react";
+import LoadingScreen from "./loading-screen";
 
 const OAuthLoadingScreen = ({ url }: { url: string }) => {
   const {
@@ -35,16 +36,7 @@ const OAuthLoadingScreen = ({ url }: { url: string }) => {
     }
   });
   return (
-    <div className="flex flex-col items-center justify-center w-full h-full gap-4">
-      <div className="flex flex-col items-center">
-        <Logo />
-      </div>
-      <div className="flex flex-col justify-center items-center ">
-        <h1 className="font-light">Connecting you to Square</h1>
-        <span className="font-normal mb-4">Just one moment...</span>
-        <Loader2 className="animate-spin" />
-      </div>
-    </div>
+    <LoadingScreen title={"Connecting you to square."} subtitle={"Just one moment..."} />
   );
 };
 
