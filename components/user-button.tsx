@@ -22,9 +22,9 @@ const UserButton = () => {
         <DropdownMenuContent className="p-4">
           <div className="grid gap-4">
             <div className="space-y-2">
-                        <h4 className="font-medium leading-none">Nhan Nguyen</h4>
+              <h4 className="font-medium leading-none">{user?.firstName} {user?.lastName}</h4>
               <p className="text-sm text-muted-foreground"> 
-               nhanng19@gmail.com
+               {user?.username}
               </p>
             </div>
           </div>
