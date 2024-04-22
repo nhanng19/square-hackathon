@@ -25,7 +25,7 @@ export const getOauthClient = () => {
  * we have authorized a user, and we have an access token for them.
  */
 export const getUserClient = (accessToken: string) => {
-  const { locationsApi, merchantsApi, oAuthApi, ordersApi, sitesApi, catalogApi } = new Client({
+  const { locationsApi, merchantsApi, oAuthApi, ordersApi, sitesApi, catalogApi, snippetsApi } = new Client({
     accessToken,
     environment:
       process.env.NEXT_PUBLIC_ENVIRONMENT === "production"
@@ -38,6 +38,7 @@ export const getUserClient = (accessToken: string) => {
     oAuthApi,
     ordersApi,
     sitesApi,
-    catalogApi
+    catalogApi,
+    snippetsApi
   };
 };
