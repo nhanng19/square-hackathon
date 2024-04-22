@@ -133,11 +133,20 @@ export function VideoStream({ roomId, host }: Props) {
           <div className="rd__call">
             <div className="rd__main-call-panel">
               <div className="rd__call-header rd__call-header--active flex !justify-center items-center">
-                <ProductBar roomId={roomId} />
+                 <div className="rd__call-header__controls-group">
+                  <div className="rd__header__elapsed">
+                    <span className="str-video__icon str-video__icon--verified rd__header__elapsed-icon"></span>
+                    <div className="rd__header__elapsed-time">01:28:21</div>
+                  </div>
+                  <div className="rd__header__latency">
+                    <div className="rd__header__latency-indicator"></div>0 ms
+                  </div>
+                </div>
               </div>
               <div className="rd__layout">
                 <div className="rd__layout__stage-container">
                   <LivestreamLayout muted={true} />
+                  <ProductBar roomId={roomId} />
                 </div>
                 <div
                   className={clsx(
