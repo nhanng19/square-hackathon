@@ -13,6 +13,9 @@ import {
   LivestreamLayout,
   CompositeButton,
   Icon,
+  RecordingInProgressNotification,
+  RecordCallConfirmationButton,
+  CallRecording,
 } from "@stream-io/video-react-sdk";
 import {
   CancelCallButton,
@@ -21,6 +24,7 @@ import {
   ToggleVideoPublishingButton,
   ScreenShareButton,
   ReactionsButton,
+  RecordCallButton,
 } from "@stream-io/video-react-sdk";
 import { useEffect, useState } from "react";
 import ChatStream from "./chat-stream";
@@ -31,87 +35,32 @@ import { toast } from "sonner";
 import fetchJson from "@/lib/fetchson";
 import LoadingScreen from "./loading-screen";
 import ProductBar from "./product-bar";
+import RecordingStream from "./recordings-stream";
 
 interface Props {
   roomId: string;
   host: boolean;
+  videoClient: StreamVideoClient | null;
+  call: Call | null;
+  chatClient: StreamChat | undefined;
 }
 
-const apiKey = process.env.NEXT_PUBLIC_STREAM_API_KEY!;
-const token = process.env.NEXT_PUBLIC_STREAM_TOKEN!;
-const userId = process.env.NEXT_PUBLIC_STREAM_USER_ID!;
-
-const user: User = {
-  id: userId,
-  name: "Nhan Nguyen",
-  image: "https://getstream.io/random_svg/?id=nhan&name=Nhan",
-};
-
-const anonUser: User = {
-  id: "jack-guest",
-  type: "guest",
-};
-
-export function VideoStream({ roomId, host }: Props) {
-  const [videoClient, setVideoClient] = useState<StreamVideoClient | null>(
-    null
-  );
-  const [call, setCall] = useState<Call | null>(null);
-  const [chatClient, setChatClient] = useState<StreamChat>();
-
-  useEffect(() => {
-    if (!roomId && host === undefined) return;
-    const client = new StreamVideoClient({
-      apiKey,
-      user: host ? user : anonUser,
-      ...(host && { token }),
-    });
-    const call = client.call("default", roomId);
-    if (!host) {
-      call.camera.disable();
-      call.microphone.disable();
-    }
-    call.join({ create: true });
-    setVideoClient(client);
-    setCall(call);
-    return () => {
-      call
-        .leave()
-        .then(() => client.disconnectUser())
-        .catch(console.error);
-    };
-  }, [roomId, host]);
-
-  useEffect(() => {
-    const client = new StreamChat(apiKey);
-    let didUserConnectInterrupt = false;
-    const connectionPromise = host
-      ? client.connectUser(user as OwnUserResponse<DefaultGenerics>, token)
-      : client.setGuestUser(user as OwnUserResponse<DefaultGenerics>);
-
-    connectionPromise.then(() => {
-      if (!didUserConnectInterrupt) {
-        setChatClient(client);
-      }
-    });
-
-    return () => {
-      didUserConnectInterrupt = true;
-      setChatClient(undefined);
-      connectionPromise
-        .then(() => client.disconnectUser())
-        .then(() => {
-          console.log("connection closed");
-        });
-    };
-  }, [apiKey, user.id, token]);
-
+export function VideoStream({
+  roomId,
+  host,
+  videoClient,
+  call,
+  chatClient,
+}: Props) {
   const [sidebarContent, setSidebarContent] = useState<SidebarContent>(null);
+  const [recordings, setRecordings] = useState<CallRecording[] | undefined>();
   const showSidebar = sidebarContent != null;
   const showParticipants = sidebarContent === "participants";
   const showChat = sidebarContent === "chat";
+  const showRecordings = sidebarContent === "recordings";
 
   const handleLeaveCall = async () => {
+    if (!host) return;
     try {
       const data = await fetchJson(`/api/rooms/delete_room/${roomId}`, {
         method: "DELETE",
@@ -126,6 +75,20 @@ export function VideoStream({ roomId, host }: Props) {
     }
   };
 
+  const retrieveRecording = async () => {
+    try {
+      const data = await call?.queryRecordings();
+      console.log(data);
+      setRecordings(data?.recordings);
+    } catch (error) {
+      toast.error(`${error}`);
+    }
+  };
+
+  useEffect(() => {
+    retrieveRecording();
+  }, [call, videoClient, chatClient]);
+
   return videoClient && call ? (
     <StreamVideo client={videoClient}>
       <StreamTheme>
@@ -133,7 +96,7 @@ export function VideoStream({ roomId, host }: Props) {
           <div className="rd__call">
             <div className="rd__main-call-panel">
               <div className="rd__call-header rd__call-header--active flex !justify-center items-center">
-                 <div className="rd__call-header__controls-group">
+                <div className="rd__call-header__controls-group">
                   <div className="rd__header__elapsed">
                     <span className="str-video__icon str-video__icon--verified rd__header__elapsed-icon"></span>
                     <div className="rd__header__elapsed-time">01:28:21</div>
@@ -156,6 +119,11 @@ export function VideoStream({ roomId, host }: Props) {
                 >
                   {showSidebar && (
                     <div className="rd__sidebar__container">
+                      {showRecordings && (
+                        <div className="rd__participants">
+                          <RecordingStream recordings={recordings} />
+                        </div>
+                      )}
                       {showParticipants && (
                         <div className="rd__participants">
                           <CallParticipantsList
@@ -178,6 +146,10 @@ export function VideoStream({ roomId, host }: Props) {
                   )}
                 </div>
               </div>
+              <div className="rd__notifications">
+                <RecordingInProgressNotification />
+                <SpeakingWhileMutedNotification />
+              </div>
             </div>
           </div>
           <div className="flex center gap-2 items-center justify-between py-[8px] px-[12px] bg-[#101213] w-full rounded-full">
@@ -185,15 +157,23 @@ export function VideoStream({ roomId, host }: Props) {
               <ScreenShareButton />
             </div>
             <div className="flex center gap-2 items-center justify-center flex-1">
+              <RecordCallConfirmationButton />
               <ScreenShareButton />
               <ReactionsButton />
-              <SpeakingWhileMutedNotification>
-                <ToggleAudioPublishingButton />
-              </SpeakingWhileMutedNotification>
+              <ToggleAudioPublishingButton />
               <ToggleVideoPublishingButton />
               <CancelCallButton onClick={handleLeaveCall} />
             </div>
             <div className="flex center gap-2 items-center justify-end flex-1">
+              <CompositeButton
+                active={showRecordings}
+                title="Participants"
+                onClick={() => {
+                  setSidebarContent(showRecordings ? null : "recordings");
+                }}
+              >
+                <Icon icon="film-roll" />
+              </CompositeButton>
               <CompositeButton
                 active={showParticipants}
                 title="Participants"
