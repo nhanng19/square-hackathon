@@ -5,6 +5,7 @@ export type SidebarContent =
   | "chat"
   | "stats"
   | "closed-captions"
+  | "recordings"
   | null;
 
   export type UseClientOptions = {
