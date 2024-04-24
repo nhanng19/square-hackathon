@@ -78,7 +78,6 @@ export function VideoStream({
   const retrieveRecording = async () => {
     try {
       const data = await call?.queryRecordings();
-      console.log(data);
       setRecordings(data?.recordings);
     } catch (error) {
       toast.error(`${error}`);

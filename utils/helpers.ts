@@ -51,3 +51,24 @@ export const decodeRoomId = (roomId: string): string => {
     }
     return decodedString;
 }; 
+
+export function calculateDuration(startTime: string, endTime: string): string {
+  const start = new Date(startTime);
+  const end = new Date(endTime);
+  const durationInMillis = end.getTime() - start.getTime();
+
+  // Convert duration from milliseconds to seconds, minutes, hours, etc.
+  const seconds = Math.floor((durationInMillis / 1000) % 60);
+  const minutes = Math.floor((durationInMillis / (1000 * 60)) % 60);
+  const hours = Math.floor((durationInMillis / (1000 * 60 * 60)) % 24);
+  const days = Math.floor(durationInMillis / (1000 * 60 * 60 * 24));
+
+  // Construct the duration string
+  let durationString = "";
+  if (days > 0) durationString += `${days} day.`;
+  if (hours > 0) durationString += `${hours} hr.`;
+  if (minutes > 0) durationString += `${minutes} min. `;
+  if (seconds > 0) durationString += `${seconds} sec.`;
+
+  return durationString.trim();
+}

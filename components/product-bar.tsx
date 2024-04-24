@@ -36,7 +36,7 @@ const ProductBar = ({ roomId }: Props) => {
                 className="size-20 rounded-lg object-cover shadow-sm"
               />
             </div>
-            <div className="flex flex-col px-8 text-wrap items-startz1">
+            <div className="flex flex-col px-8 text-wrap items-start">
               <h3 className="font-medium text-sm">
                 {catalogData?.object?.item_data?.name}
               </h3>
