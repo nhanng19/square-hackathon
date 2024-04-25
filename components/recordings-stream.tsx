@@ -1,4 +1,4 @@
-import { CallRecording, CallRecordingList } from "@stream-io/video-react-sdk";
+import { CallRecording, CallRecordingList, IconButton } from "@stream-io/video-react-sdk";
 import {
   Table,
   TableBody,
@@ -19,21 +19,60 @@ import {
 } from "./ui/dropdown-menu";
 import { Button } from "./ui/button";
 import { ArrowUpDown, Download, MoreHorizontal } from "lucide-react";
-import { calculateDuration } from "@/utils/helpers";
+import { calculateDuration, decodeRoomId, generateThumbnail } from "@/utils/helpers";
 import { Upload } from "lucide-react";
+import {
+  RecordingProps,
+  createRecording,
+} from "@/lib/actions/recording.action";
+import { toast } from "sonner";
 
 const RecordingStream = ({
+  userId,
+  roomId,
   recordings,
+  onClose,
 }: {
   recordings: CallRecording[] | undefined;
-  }) => {
-  
-  const handleUploadRecording = () => { 
-    
-  }
-  
+  userId: string | undefined;
+  roomId: string;
+  onClose: () => void;
+}) => {
+  const handleUploadRecording = async ({
+    userId,
+    roomId,
+    fileName,
+    startTime,
+    endTime,
+    url,
+  }: RecordingProps) => {
+    try {
+      const thumbnail = await generateThumbnail(url);
+    const response = await createRecording({
+      userId,
+      roomId,
+      fileName,
+      startTime,
+      endTime,
+      url,
+      thumbnail
+    });
+      return toast.success(`${fileName} successfully uploaded!`)
+    } catch (error) { 
+      return toast.error(`${error}`)
+    }
+  };
+
   return (
     <>
+      <div className="rd__chat-header">
+        <h2 className="rd__chat-header__title">Recordings</h2>
+        <IconButton
+          className="rd__chat-header__icon"
+          onClick={onClose}
+          icon="close"
+        />
+      </div>
       <Table>
         <TableCaption>A list of your recent recordings.</TableCaption>
         <TableHeader>
@@ -62,8 +101,25 @@ const RecordingStream = ({
                   <DropdownMenuContent align="end">
                     <DropdownMenuLabel>Actions</DropdownMenuLabel>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem><Upload className="mr-2 h-4 w-4"/> Upload</DropdownMenuItem>
-                    <DropdownMenuItem><Download className="mr-2 h-4 w-4"/>Download</DropdownMenuItem>
+                    <DropdownMenuItem
+                      className="cursor-pointer"
+                      onClick={() =>
+                        handleUploadRecording({
+                          userId: userId,
+                          roomId: roomId,
+                          fileName: recording.filename,
+                          startTime: recording.start_time,
+                          endTime: recording.end_time,
+                          url: recording.url,
+                        })
+                      }
+                    >
+                      <Upload className="mr-2 h-4 w-4" /> Upload
+                    </DropdownMenuItem>
+                    <DropdownMenuItem className="cursor-pointer">
+                      <Download className="mr-2 h-4 w-4" />
+                      Download
+                    </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </TableCell>
