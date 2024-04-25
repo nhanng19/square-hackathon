@@ -1,16 +1,15 @@
-import mongoose, { SchemaType } from "mongoose";
-const { Schema } = mongoose;
+import mongoose from "mongoose";
 
-const recordingSchema = new Schema({
-  userId: { type: Schema.Types.ObjectId, ref: "User" },
-  roomId: { type: Schema.Types.ObjectId, ref: "Room" },
+const recordingSchema = new mongoose.Schema({
+  userId: { type: String },
+  roomId: { type: String },
   fileName: { type: String, unique: true },
   startTime: { type: String },
-  endTime: { type: Number },
+  endTime: { type: String },
   url: { type: String },
+  thumbnail: { type: String }
 });
 
-const Recording =
-  mongoose.models.Recording || mongoose.model("Recording", recordingSchema);
+const Recording = mongoose.models.Recording || mongoose.model("Recording", recordingSchema);
 
 export default Recording;
