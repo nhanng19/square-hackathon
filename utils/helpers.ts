@@ -52,6 +52,23 @@ export const decodeRoomId = (roomId: string): string => {
     return decodedString;
 }; 
 
+export function formatDate(inputDateStr : string) {
+  // Parse the input date string into a Date object
+  const date = new Date(inputDateStr);
+
+  // Extract the month, day, and year from the Date object
+  const month = date.getMonth() + 1; // Adding 1 because getMonth() returns zero-based index
+  const day = date.getDate();
+  const year = date.getFullYear() % 100; // Extracting last two digits of the year
+
+  // Format the date components into mm/dd/yy format
+  const formattedDate = `${month.toString().padStart(2, "0")}/${day
+    .toString()
+    .padStart(2, "0")}/${year.toString().padStart(2, "0")}`;
+
+  return formattedDate;
+}
+
 export function calculateDuration(startTime: string, endTime: string): string {
   const start = new Date(startTime);
   const end = new Date(endTime);
@@ -71,4 +88,36 @@ export function calculateDuration(startTime: string, endTime: string): string {
   if (seconds > 0) durationString += `${seconds} sec.`;
 
   return durationString.trim();
+}
+
+
+export async function generateThumbnail(videoUrl : string) {
+  return new Promise((resolve, reject) => {
+    const video = document.createElement("video");
+    video.preload = "metadata";
+    video.src = videoUrl;
+
+    video.onloadedmetadata = function () {
+      const canvas = document.createElement("canvas");
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      const ctx = canvas.getContext("2d");
+      ctx?.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+      // Convert canvas to base64 encoded image
+      const thumbnail = canvas.toDataURL("image/jpeg");
+      console.log(thumbnail)
+      // Resolve the promise with the thumbnail data
+      resolve(thumbnail);
+    };
+
+    video.onerror = function (err) {
+      console.error("Error loading video:", err);
+      // Reject the promise if there's an error
+      reject(err);
+    };
+
+    // Start loading the video
+    video.load();
+  });
 }
