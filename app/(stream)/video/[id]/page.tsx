@@ -11,6 +11,7 @@ import {
 } from "@stream-io/video-react-sdk";
 import { useEffect, useState } from "react";
 import { DefaultGenerics, OwnUserResponse, StreamChat } from "stream-chat";
+import useUser from "@/hooks/useUser";
 
 const apiKey = process.env.NEXT_PUBLIC_STREAM_API_KEY!;
 const token = process.env.NEXT_PUBLIC_STREAM_TOKEN!;
@@ -36,7 +37,7 @@ export default function Page({ params }: { params: { id: string } }) {
   );
   const [call, setCall] = useState<Call | null>(null);
   const [chatClient, setChatClient] = useState<StreamChat>();
-
+  const { user: userData } = useUser();
   useEffect(() => {
     if (!roomId && host === undefined) return;
     const client = new StreamVideoClient({
@@ -86,7 +87,7 @@ export default function Page({ params }: { params: { id: string } }) {
 
   return (
     <div className="flex h-full">
-      <VideoStream {...{videoClient, call, chatClient, roomId, host}} />
+      <VideoStream {...{videoClient, call, chatClient, roomId, host, userData}} />
     </div>    
   );
 }
