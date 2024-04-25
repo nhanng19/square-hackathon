@@ -29,7 +29,7 @@ import {
 import { useEffect, useState } from "react";
 import ChatStream from "./chat-stream";
 import { NewMessageNotification } from "./new-message-notification";
-import { SidebarContent } from "@/types";
+import { BasicUserData, SidebarContent } from "@/types";
 import { DefaultGenerics, OwnUserResponse, StreamChat } from "stream-chat";
 import { toast } from "sonner";
 import fetchJson from "@/lib/fetchson";
@@ -43,6 +43,7 @@ interface Props {
   videoClient: StreamVideoClient | null;
   call: Call | null;
   chatClient: StreamChat | undefined;
+  userData: BasicUserData | undefined
 }
 
 export function VideoStream({
@@ -51,13 +52,14 @@ export function VideoStream({
   videoClient,
   call,
   chatClient,
+  userData,
 }: Props) {
   const [sidebarContent, setSidebarContent] = useState<SidebarContent>(null);
   const [recordings, setRecordings] = useState<CallRecording[] | undefined>();
   const showSidebar = sidebarContent != null;
   const showParticipants = sidebarContent === "participants";
   const showChat = sidebarContent === "chat";
-  const showRecordings = sidebarContent === "recordings";
+  const showRecordings = sidebarContent  === "recordings" ;
 
   const handleLeaveCall = async () => {
     if (!host) return;
@@ -118,9 +120,14 @@ export function VideoStream({
                 >
                   {showSidebar && (
                     <div className="rd__sidebar__container">
-                      {showRecordings && (
-                        <div className="rd__participants">
-                          <RecordingStream recordings={recordings} />
+                      {showRecordings && host && (
+                        <div className="str-video__chat">
+                          <RecordingStream
+                            onClose={() => setSidebarContent(null)}
+                            roomId={roomId}
+                            userId={userData?.userId}
+                            recordings={recordings}
+                          />
                         </div>
                       )}
                       {showParticipants && (
