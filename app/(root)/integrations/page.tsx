@@ -78,7 +78,7 @@ const Integrations = () => {
                           Integrate Square Edge
                         </SheetTitle>
                         <SheetDescription>
-                          Integrate Square Edge with {site.domain}. Click save
+                          Integrate Square Edge with <span className="underline">{site.domain}</span>. Click save
                           when you're done.
                         </SheetDescription>
                       </SheetHeader>

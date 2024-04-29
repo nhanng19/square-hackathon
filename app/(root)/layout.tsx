@@ -7,7 +7,7 @@ import MenuBar from "@/components/shared/MenuBar";
 import NextTopLoader from "nextjs-toploader";
 import Sidebar from "@/components/shared/Sidebar";
 import { SWRProvider } from "@/components/swr-provider";
-import { Toaster } from "sonner";
+import { Toaster } from "@/components/ui/sonner";
 const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",

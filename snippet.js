@@ -1,3 +1,5 @@
+<script src="https://cdn.tailwindcss.com"></script>;
+
 let previousWindow = null;
 
 const userId = "6629c9f7ab7170b2f9fd979f";
@@ -13,30 +15,16 @@ const decodeRoomId = (roomId) => {
 const createLiveBadge = () => {
   const badge = document.createElement("button");
   badge.textContent = "LIVE";
-  badge.style.backgroundColor = "red";
-  badge.style.color = "white";
-  badge.style.padding = "4px 8px";
-  badge.style.borderRadius = "5px";
-  badge.style.marginLeft = "5px";
-  badge.style.textDecoration = "none";
-  badge.style.zIndex = "99";
-  badge.style.border = "none";
-  badge.style.cursor = "pointer";
+  badge.className =
+    "bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded border border-red-400";
   return badge;
 };
 
 const createRecordingBadge = () => {
   const badge = document.createElement("button");
-  badge.textContent = "RECORDING";
-  badge.style.backgroundColor = "blue";
-  badge.style.color = "white";
-  badge.style.padding = "4px 8px";
-  badge.style.borderRadius = "5px";
-  badge.style.marginLeft = "5px";
-  badge.style.textDecoration = "none";
-  badge.style.zIndex = "99";
-  badge.style.border = "none";
-  badge.style.cursor = "pointer";
+  badge.textContent = "DEMO";
+  badge.className =
+    "bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded border border-blue-400";
   return badge;
 };
 
