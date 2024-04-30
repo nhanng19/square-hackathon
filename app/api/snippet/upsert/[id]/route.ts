@@ -27,12 +27,12 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
     user?.metaData?.iv
   );
   const checkToken = await isTokenValid(accessToken);
-  if (!checkToken) {
-    return NextResponse.json(
-      { locations: [], isTokenValid: checkToken },
-      { status: 200 }
-    );
-  }
+  // if (!checkToken) {
+  //   return NextResponse.json(
+  //     { locations: [], isTokenValid: checkToken },
+  //     { status: 200 }
+  //   );
+  // }
   const { snippetsApi } = getUserClient(accessToken);
   try {
     const siteId = params.id;

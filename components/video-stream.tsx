@@ -171,7 +171,7 @@ export function VideoStream({
               <CancelCallButton onClick={handleLeaveCall} />
             </div>
             <div className="flex center gap-2 items-center justify-end flex-1">
-              <CompositeButton
+              {host && <CompositeButton
                 active={showRecordings}
                 title="Participants"
                 onClick={() => {
@@ -179,7 +179,7 @@ export function VideoStream({
                 }}
               >
                 <Icon icon="film-roll" />
-              </CompositeButton>
+              </CompositeButton>}
               <CompositeButton
                 active={showParticipants}
                 title="Participants"

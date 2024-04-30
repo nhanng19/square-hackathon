@@ -17,7 +17,7 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export const createJWT = async (payload: { sub?: string }) => {
+export const createJWT = async (payload: { sub?: string, user_id?: string }) => {
   try {
     if (!process.env.JWT_SIGNING_SECRET) {
       console.error("JWT_SIGNING_SECRET is not set - check .env file");

@@ -32,12 +32,12 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
 
   const checkToken = await isTokenValid(accessToken);
 
-  if (!checkToken) {
-    return NextResponse.json(
-      { locations: [], isTokenValid: checkToken },
-      { status: 200 }
-    );
-  }
+  // if (!checkToken) {
+  //   return NextResponse.json(
+  //     { locations: [], isTokenValid: checkToken },
+  //     { status: 200 }
+  //   );
+  // }
 
   const apiUrl = process.env.SQUARE_BASE_URL + "v2/catalog/object/" + catalogId;
 

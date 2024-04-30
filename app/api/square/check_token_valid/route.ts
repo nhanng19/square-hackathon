@@ -4,7 +4,6 @@ import { getOauthClient } from "@/utils/square-client";
 import { decryptToken } from "@/utils/server-helpers";
 import { NextRequest, NextResponse } from "next/server";
 
-export const dynamic = "force-dynamic";
 
 (BigInt.prototype as any).toJSON = function () {
   return this.toString();

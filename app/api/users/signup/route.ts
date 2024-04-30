@@ -25,7 +25,10 @@ export async function POST(req: NextRequest, res: NextResponse) {
       avatar: Crypto.createHash("md5").update(email).digest("hex"),
     });
     // create a jwt token that is valid for 7 days
-    const token = await createJWT({ sub: newUser._id.toString() });
+    const token = await createJWT({
+      sub: newUser._id.toString(),
+      user_id: newUser._id.toString(),
+    });
     return NextResponse.json(
       {
         id: newUser._id,

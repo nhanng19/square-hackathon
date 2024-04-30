@@ -12,10 +12,8 @@ export const getOauthClient = () => {
     throw new Error("Server Error");
   }
   const { oAuthApi } = new Client({
-    environment:
-      process.env.NEXT_PUBLIC_ENVIRONMENT === "production"
-        ? Environment.Production
-        : Environment.Sandbox,
+    environment: Environment.Production
+   
   });
   return oAuthApi;
 };
@@ -27,10 +25,7 @@ export const getOauthClient = () => {
 export const getUserClient = (accessToken: string) => {
   const { locationsApi, merchantsApi, oAuthApi, ordersApi, sitesApi, catalogApi, snippetsApi } = new Client({
     accessToken,
-    environment:
-      process.env.NEXT_PUBLIC_ENVIRONMENT === "production"
-        ? Environment.Production
-        : Environment.Sandbox,
+    environment: Environment.Production
   });
   return {
     locationsApi,

@@ -7,11 +7,23 @@ import { ContainerScroll } from "@/components/ui/container-scroll-animation";
 import { InfiniteMovingCards } from "@/components/ui/infinite-moving-cards";
 import { clients, products } from "@/lib/constant";
 import { HeroParallax } from "@/components/connect-parallax";
-import { StickyScroll, squareContent } from "@/components/ui/sticky-scroll-reveal";
+import {
+  StickyScroll,
+  squareContent,
+} from "@/components/ui/sticky-scroll-reveal";
+import Hero from "@/components/marketing/hero";
+import SectionTitle from "@/components/marketing/sectionTitle";
+import Benefits from "@/components/marketing/benefits";
+import Video from "@/components/marketing/video";
+import Testimonials from "@/components/marketing/testimonials";
+import Faq from "@/components/marketing/faq";
+import Cta from "@/components/marketing/cta";
+import Footer from "@/components/marketing/footer";
+import { benefitOne, benefitTwo } from "@/components/marketing/data";
 export default function Home() {
   return (
     <>
-      <main className="flex items-center justify-center flex-col overflow-hidden ">
+      {/* <main className="flex items-center justify-center flex-col overflow-hidden ">
         <section className="h-screen w-full   rounded-mdrelative flex flex-col items-center  antialiased">
           <div className="absolute inset-0  h-full w-full items-center px-5 py-24"></div>
           <div className="flex flex-col mt-[-100px] md:mt-[-50px]">
@@ -29,7 +41,7 @@ export default function Home() {
                 </div>
               }
             >
-              <Image
+              <img
                 src="/images/hero-image.png"
                 alt="hero"
                 height={720}
@@ -49,7 +61,44 @@ export default function Home() {
         <section>
           <HeroParallax products={products}></HeroParallax>
         </section>
-      </main>
+      </main> */}
+      <div className="pt-24">
+        <Hero />
+        <SectionTitle
+          pretitle="Nextly Benefits"
+          title=" Why should you use this landing page"
+        >
+          Nextly is a free landing page & marketing website template for
+          startups and indie projects. Its built with Next.js & TailwindCSS. And
+          its completely open-source.
+        </SectionTitle>
+        <Benefits data={benefitOne} />
+        <Benefits imgPos="right" data={benefitTwo} />
+        <SectionTitle
+          pretitle="Watch a video"
+          title="Learn how to fullfil your needs"
+        >
+          This section is to highlight a promo or demo video of your product.
+          Analysts says a landing page with video has 3% more conversion rate.
+          So, don&apos;t forget to add one. Just like this.
+        </SectionTitle>
+        <Video />
+        <SectionTitle
+          pretitle="Testimonials"
+          title="Here's what our customers said"
+        >
+          Testimonails is a great way to increase the brand trust and awareness.
+          Use this section to highlight your popular customers.
+        </SectionTitle>
+        <Testimonials />
+        <SectionTitle pretitle="FAQ" title="Frequently Asked Questions">
+          Answer your customers possible questions here, it will increase the
+          conversion rate as well as support or chat requests.
+        </SectionTitle>
+        <Faq />
+        <Cta />
+        <Footer />
+      </div>
     </>
   );
 }

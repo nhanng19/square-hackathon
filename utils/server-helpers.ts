@@ -22,9 +22,9 @@ export const verifyJWT = async (req: NextRequest): Promise<boolean> => {
 };
 
 export const isTokenValid = async (accessToken: string) => {
-  const { locationsApi } = getUserClient(accessToken);
+  const { catalogApi } = getUserClient(accessToken);
   try {
-    await locationsApi.listLocations();
+    await catalogApi.listCatalog();
     return true;
   } catch (e) {
     return false;
@@ -156,3 +156,91 @@ export const deauthorizeToken = async ({
     throw new InternalServerError("Error deauthorizing token", 500);
   }
 };
+
+export function generateUUID() {
+  const chars = "0123456789abcdef";
+  const segments = [8, 4, 4, 4, 12]; // Length of each segment in the UUID
+  let uuid = "";
+
+  for (let i = 0; i < segments.length; i++) {
+    for (let j = 0; j < segments[i]; j++) {
+      uuid += chars[Math.floor(Math.random() * chars.length)];
+    }
+    if (i < segments.length - 1) {
+      uuid += "-";
+    }
+  }
+
+  return uuid;
+}
+
+export function generateFakeName() {
+  const adjectives = [
+    "Red",
+    "Blue",
+    "Green",
+    "Yellow",
+    "Purple",
+    "Orange",
+    "Black",
+    "White",
+    "Silver",
+    "Gold",
+    "Fierce",
+    "Gentle",
+    "Brave",
+    "Sneaky",
+    "Mighty",
+    "Clever",
+    "Swift",
+    "Wise",
+    "Wild",
+    "Gracious",
+    "Radiant",
+    "Majestic",
+    "Elegant",
+    "Spirited",
+    "Noble",
+    "Fearless",
+    "Adventurous",
+    "Regal",
+    "Glorious",
+    "Vibrant",
+  ];
+  const nouns = [
+    "Tiger",
+    "Lion",
+    "Eagle",
+    "Bear",
+    "Wolf",
+    "Panther",
+    "Falcon",
+    "Cheetah",
+    "Jaguar",
+    "Leopard",
+    "Snake",
+    "Shark",
+    "Fox",
+    "Hawk",
+    "Owl",
+    "Falcon",
+    "Lynx",
+    "Dolphin",
+    "Rhino",
+    "Giraffe",
+    "Elephant",
+    "Kangaroo",
+    "Zebra",
+    "Horse",
+    "Gorilla",
+    "Panda",
+    "Penguin",
+    "Koala",
+    "Crocodile",
+    "Turtle",
+    "Octopus",
+  ];
+  const adjective = adjectives[Math.floor(Math.random() * adjectives.length)];
+  const noun = nouns[Math.floor(Math.random() * nouns.length)];
+  return `${adjective} ${noun}`;
+}

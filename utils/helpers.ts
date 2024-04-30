@@ -1,7 +1,8 @@
-import { InternalServerError } from "@/types";
+import { BasicUserData, InternalServerError } from "@/types";
 import { decodeJwt } from "jose";
 import { NextRequest } from "next/server";
 import { verify } from "../middleware";
+import { User } from "@stream-io/video-react-sdk";
 export function isString(value: unknown): value is string {
   return typeof value === "string";
 }
@@ -35,24 +36,23 @@ export const decodeJWT = (req: NextRequest): string | undefined => {
   }
 };
 
-export const encodeRoomId = (roomId: string): string => { 
+export const encodeRoomId = (roomId: string): string => {
   var encodedString = "";
-  for (var i = 0; i < roomId.length; i++) encodedString += roomId.charCodeAt(i).toString(16);
+  for (var i = 0; i < roomId.length; i++)
+    encodedString += roomId.charCodeAt(i).toString(16);
   encodedString = encodedString.substr(0, 64);
   return encodedString;
-} 
+};
 
 export const decodeRoomId = (roomId: string): string => {
-    var decodedString = "";
-    for (var i = 0; i < roomId.length; i += 2) {
-      decodedString += String.fromCharCode(
-        parseInt(roomId.substr(i, 2), 16)
-      );
-    }
-    return decodedString;
-}; 
+  var decodedString = "";
+  for (var i = 0; i < roomId.length; i += 2) {
+    decodedString += String.fromCharCode(parseInt(roomId.substr(i, 2), 16));
+  }
+  return decodedString;
+};
 
-export function formatDate(inputDateStr : string) {
+export function formatDate(inputDateStr: string) {
   // Parse the input date string into a Date object
   const date = new Date(inputDateStr);
 
@@ -90,8 +90,7 @@ export function calculateDuration(startTime: string, endTime: string): string {
   return durationString.trim();
 }
 
-
-export async function generateThumbnail(videoUrl : string) {
+export async function generateThumbnail(videoUrl: string) {
   return new Promise((resolve, reject) => {
     const video = document.createElement("video");
     video.preload = "metadata";
@@ -106,7 +105,7 @@ export async function generateThumbnail(videoUrl : string) {
 
       // Convert canvas to base64 encoded image
       const thumbnail = canvas.toDataURL("image/jpeg");
-      console.log(thumbnail)
+      console.log(thumbnail);
       // Resolve the promise with the thumbnail data
       resolve(thumbnail);
     };
@@ -121,3 +120,12 @@ export async function generateThumbnail(videoUrl : string) {
     video.load();
   });
 }
+
+export const generateUser = (userData: BasicUserData) => {
+  const user: User = {
+    id: userData.userId as string,
+    name: userData.firstName as string,
+    image: `https://getstream.io/random_svg/?id=${userData.firstName}&name=${userData.firstName}`,
+  };
+  return user;
+};

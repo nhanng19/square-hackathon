@@ -26,12 +26,12 @@ export async function GET(req: NextRequest, res: NextResponse) {
     user?.metaData?.iv
   );
   const checkToken = await isTokenValid(accessToken);
-  if (!checkToken) {
-    return NextResponse.json(
-      { locations: [], isTokenValid: checkToken },
-      { status: 200 }
-    );
-  }
+  // if (!checkToken) {
+  //   return NextResponse.json(
+  //     { locations: [], isTokenValid: checkToken },
+  //     { status: 200 }
+  //   );
+  // }
   const { sitesApi } = getUserClient(accessToken);
   try {
     const { result } = await sitesApi.listSites()

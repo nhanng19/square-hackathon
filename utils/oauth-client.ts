@@ -12,10 +12,7 @@ export const getOauthClient = () => {
     throw new Error("Server Error");
   }
   const { oAuthApi } = new Client({
-    environment:
-      process.env.NEXT_PUBLIC_ENVIRONMENT === "production"
-        ? Environment.Production
-        : Environment.Sandbox,
+    environment: Environment.Production,
   });
   return oAuthApi;
 };
