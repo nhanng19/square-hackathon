@@ -3,7 +3,7 @@ import { verifyJWT, decodeJWT } from "@/utils/server-helpers";
 import { getUser } from "@/lib/actions/user.action";
 import { isString } from "@/utils/helpers";
 import { decryptToken, isTokenValid } from "@/utils/server-helpers";
-
+export const dynamic = "force-dynamic";
 export async function GET(req: NextRequest, res: NextResponse) {
   if (!verifyJWT(req)) {
     return NextResponse.json({ status: 403 });

@@ -64,7 +64,10 @@ const Integrations = () => {
     try {
       const snippet = {
         content: createSnippet({
-          baseUrl: process.env.NEXT_PUBLIC_DEVELOPMENT_BASE_URL!,
+          baseUrl:
+            process.env.NEXT_PUBLIC_ENVIRONMENT === "production"
+              ? process.env.NEXT_PUBLIC_PRODUCTION_BASE_URL!
+              : process.env.NEXT_PUBLIC_DEVELOPMENT_BASE_URL!,
           userId: user?.userId as string,
           modalColor,
           modalTitle,
@@ -99,7 +102,7 @@ const Integrations = () => {
           </CardHeader>
           <CardContent>
             {sites?.map((site: Site) => (
-              <Card x-chunk="dashboard-04-chunk-1">
+              <Card key={site.id} x-chunk="dashboard-04-chunk-1">
                 <CardHeader className="flex flex-row justify-between">
                   <div className="flex flex-col justify-start items-start space-y-4">
                     <CardTitle className="flex flex-row gap-2 justify-center items-center">

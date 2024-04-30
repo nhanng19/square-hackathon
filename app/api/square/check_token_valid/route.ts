@@ -3,12 +3,15 @@ import { decodeJWT, isString, verifyJWT } from "@/utils/helpers";
 import { getOauthClient } from "@/utils/square-client";
 import { decryptToken } from "@/utils/server-helpers";
 import { NextRequest, NextResponse } from "next/server";
+
+export const dynamic = "force-dynamic";
+
 (BigInt.prototype as any).toJSON = function () {
   return this.toString();
 };
 
 // This endpoint solely exists to the Frontend can check if the user's token is still valid
-async function handler(req: NextRequest, res: NextResponse) {
+export async function GET(req: NextRequest, res: NextResponse) {
   try {
     if (!verifyJWT(req)) {
       return NextResponse.json(
@@ -48,4 +51,3 @@ async function handler(req: NextRequest, res: NextResponse) {
   }
 }
 
-export default handler;

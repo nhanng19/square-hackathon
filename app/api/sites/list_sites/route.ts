@@ -4,7 +4,7 @@ import { getUser } from "@/lib/actions/user.action";
 import { isString } from "@/utils/helpers";
 import { decryptToken, isTokenValid } from "@/utils/server-helpers";
 import { getUserClient } from "@/utils/square-client";
-
+export const dynamic = "force-dynamic";
 export async function GET(req: NextRequest, res: NextResponse) {
   if (!verifyJWT(req)) {
     return NextResponse.json({ status: 403 });

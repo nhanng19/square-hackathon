@@ -1,12 +1,14 @@
-import { NextApiRequest, NextApiResponse } from "next";
-import { getAuthUrlValues } from "@/lib/utils";
-import { NextResponse } from "next/server";
-export async function GET(req: NextApiRequest, res: NextApiResponse) {
+
+import { errorResponse, getAuthUrlValues } from "@/lib/utils";
+import { NextRequest, NextResponse } from "next/server";
+
+export const dynamic = "force-dynamic";
+
+export async function GET(req: NextRequest, res: NextResponse) {
     try {
       const data = await getAuthUrlValues();
       return NextResponse.json(data);
     } catch (e) {
-      console.error("error: ", e);
-      res.status(400).json({ message: "Error getting auth url" });
+      return errorResponse(e)
     }
 }

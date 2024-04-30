@@ -55,9 +55,8 @@ const Page = () => {
                 const currency =
                   itemData.variations[0].item_variation_data.price_money
                     .currency;
-                const date = new Date(product.updated_at).toLocaleString();
                 return (
-                  <div className="relative block overflow-hidden rounded-lg border  p-4 sm:p-6 lg:p-8 bg-background">
+                  <div key={itemData.name} className="relative block overflow-hidden rounded-lg border  p-4 sm:p-6 lg:p-8 bg-background">
                     <span className="absolute inset-x-0 bottom-0 h-2 "></span>
 
                     <div className="sm:flex sm:justify-between sm:gap-4">
