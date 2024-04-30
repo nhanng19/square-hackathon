@@ -243,7 +243,7 @@ setTimeout(async () => {
     );
     if (matchingItem) {
       const productId = matchingItem?.roomId;
-      addLiveBadgeToParagraph(p, demoUrl);
+      addLiveBadgeToParagraph(p, productId);
     }
     if (matchingRecording) {
       const demoUrl = matchingRecording?.url;
