@@ -1,12 +1,12 @@
 import { NextApiRequest } from "next";
-import { MetaData, SquareData } from "./user";
+import { MetaDataType, SquareDataType } from "./user";
 
 export interface NextApiUserRequest extends NextApiRequest {
   user: { username: string };
 }
 
 export interface RefreshTokenResponse {
-  squareData: SquareData;
-  metaData: MetaData;
+  squareData: SquareDataType;
+  metaData: MetaDataType;
   message: string;
 }
