@@ -6,7 +6,7 @@ import { NavItems } from "@/constants";
 
 import { cn } from "@/lib/utils";
 import { useSidebar } from "@/hooks/useSidebar";
-import { ChevronsLeft } from "lucide-react";
+import { ChevronLeft } from "lucide-react";
 
 interface SidebarProps {
   className?: string;
@@ -30,7 +30,7 @@ export default function Sidebar({ className }: SidebarProps) {
         className
       )}
     >
-      <ChevronsLeft
+      <ChevronLeft
         className={cn(
           "absolute -right-3 bottom-20 cursor-pointer rounded-full border bg-background text-3xl text-foreground",
           !isOpen && "rotate-180"
