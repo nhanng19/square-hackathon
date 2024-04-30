@@ -4,7 +4,7 @@
 
 This project was submitted to Square's Local Community Hackathon.
 
-You can also try out the [live demo](https://squareedege.vercel.app/) by logging in and authenticating with your Square account.
+You can also try out the [live demo](https://squareedge.vercel.app/) by logging in and authenticating with your Square account.
 
 ![Integration](/assets/landing.PNG)
 
@@ -33,7 +33,7 @@ Square Edge revolutionizes online retail by transforming it with interactive, en
 - **zustand** (Global state management)
 - **lucide** (Icons)
 - **jose** (JWT encryption)
-- **steam** (video and chat)
+- **stream** (video and chat)
 
 ### Square APIs used:
 - **OAuth**
