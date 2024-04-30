@@ -1,24 +1,53 @@
-interface SnippetProps { 
-    baseUrl: string,
-    userId: string,
-    modalColor: string,
-    modalTitle: string,
-    modalCta: string,
-    modalMessage: string,
-    modalUrl: string,
+interface SnippetProps {
+  baseUrl: string;
+  userId: string;
+  modalColor: string;
+  modalTitle: string;
+  modalCta: string;
+  modalMessage: string;
+  modalUrl: string;
 }
 
 export const createSnippet = ({
-    baseUrl,
-    userId,
-    modalColor,
-    modalTitle,
-    modalCta,
-    modalMessage,
-    modalUrl,
+  baseUrl,
+  userId,
+  modalColor,
+  modalTitle,
+  modalCta,
+  modalMessage,
+  modalUrl,
 }: SnippetProps): string => {
   return `
-<script src="https://cdn.tailwindcss.com"></script>;
+
+<style>
+         @-webkit-keyframes fadeInDown {
+            0% {
+               opacity: 0;
+               -webkit-transform: translateY(-20px);
+            }
+            100% {
+               opacity: 1;
+               -webkit-transform: translateY(0);
+            }
+         }
+         
+         @keyframes fadeInDown {
+            0% {
+               opacity: 0;
+               transform: translateY(-20px);
+            }
+            100% {
+               opacity: 1;
+               transform: translateY(0);
+            }
+         }
+         
+         .fadeInDown {
+            -webkit-animation: fadeInDown 300ms 0ms forwards;
+            animation: fadeInDown 300ms 0ms forwards;
+         }
+</style>
+<script src="https://cdn.tailwindcss.com"></script>
 
 <script type="text/javascript">
 let previousWindow = null;
@@ -95,7 +124,7 @@ const createModal = (modalTitle, modalMessage, modalColor, modalCta, modalUrl) =
 
   const modalDialog = document.createElement("div");
   modalDialog.className =
-    "relative rounded-2xl border border-blue-100 bg-white p-4 shadow-lg sm:p-6 lg:p-8 animate__animated animate__fadeInDown";
+    "relative rounded-2xl border border-blue-100 bg-white p-4 shadow-lg sm:p-6 lg:p-8 fadeInDown";
   modalDialog.style.backgroundColor = "white";
   modalDialog.style.minWidth = "30vw";
   modalDialog.style.maxWidth = "30vw" 
