@@ -90,6 +90,18 @@ const openLiveStream = (productId) => {
   );
 };
 
+const openDemo = (demoUrl) => {
+  if (previousWindow && !previousWindow.closed) {
+    previousWindow.close();
+  }
+  const newWindowFeatures = "left=100,top=100";
+  previousWindow = window.open(
+    demoUrl,
+    "_blank",
+    newWindowFeatures
+  );
+};
+
 const addLiveBadgeToParagraph = (p, productId) => {
   const badge = createLiveBadge();
   badge.addEventListener("click", (e) => {
@@ -99,11 +111,11 @@ const addLiveBadgeToParagraph = (p, productId) => {
   p.insertAdjacentElement("afterend", badge);
 };
 
-const addRecordingBadgeToParagraph = (p, productId) => {
+const addRecordingBadgeToParagraph = (p, demoUrl) => {
   const badge = createRecordingBadge();
   badge.addEventListener("click", (e) => {
     e.preventDefault();
-    openLiveStream(productId);
+    openDemo(demoUrl);
   });
   p.insertAdjacentElement("afterend", badge);
 };
@@ -231,11 +243,11 @@ setTimeout(async () => {
     );
     if (matchingItem) {
       const productId = matchingItem?.roomId;
-      addLiveBadgeToParagraph(p, productId);
+      addLiveBadgeToParagraph(p, demoUrl);
     }
     if (matchingRecording) {
-      const productId = matchingRecording?.roomId;
-      addRecordingBadgeToParagraph(p, productId);
+      const demoUrl = matchingRecording?.url;
+      addRecordingBadgeToParagraph(p, demoUrl);
     }
   });
   if (!getCookie("modalShown")) {
