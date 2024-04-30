@@ -8,46 +8,46 @@ import {
 } from "@heroicons/react/24/solid";
 
 const benefitOne = {
-  title: "Highlight your benefits",
-  desc: "You can use this space to highlight your first benefit or a feature of your product. It can also contain an image or Illustration like in the example along with some bullet points.",
+  title: "8x more engagement",
+  desc: "Videos get far more views and engagement than simple photo posts on social media. In fact, social shoppable video generates 1200% more shares than text and image content combined.",
   image: "/images/benefit-one.png",
   bullets: [
     {
       title: "Understand your customers",
-      desc: "Then explain the first point breifly in one or two lines.",
+      desc: "Learn to sustain and grow your community.",
       icon: <FaceSmileIcon />,
     },
     {
       title: "Improve acquisition",
-      desc: "Here you can add the next benefit point.",
+      desc: "Learn to sustain and grow your acquisition.",
       icon: <ChartBarSquareIcon />,
     },
     {
       title: "Drive customer retention",
-      desc: "This will be your last bullet point in this section.",
+      desc: "Learn to sustain and grow your retention.",
       icon: <CursorArrowRaysIcon />,
     },
   ],
 };
 
 const benefitTwo = {
-  title: "Offer more benefits here",
-  desc: "You can use this same layout with a flip image to highlight your rest of the benefits of your product. It can also contain an image or Illustration as above section along with some bullet points.",
+  title: "America’s #1 Live Shopping System",
+  desc: "A $300B sales funnel in China - Live selling is growing rapidly in the US. CS (CommentSold) powered live-selling shops sold approx. 1 Billion in product last year in the US with top merchants raking in > 50M in sales, so, when done right, live-selling can create explosive growth for consumer retail brands.",
   image: "/images/benefit-two.png",
   bullets: [
     {
-      title: "Mobile Responsive Template",
-      desc: "Nextly is designed as a mobile first responsive template.",
+      title: "Mobile Responsive",
+      desc: "Showcase shoppable videos on website + mobile app",
       icon: <DevicePhoneMobileIcon />,
     },
     {
-      title: "Powered by Next.js & TailwindCSS",
-      desc: "This template is powered by latest technologies and tools.",
+      title: "Powered by Stream",
+      desc: "This platforim is powered by the latest streaming technologies and SDK.",
       icon: <AdjustmentsHorizontalIcon />,
     },
     {
       title: "Dark & Light Mode",
-      desc: "Nextly comes with a zero-config light & dark mode. ",
+      desc: "Square Edge comes with a zero-config light & dark mode. ",
       icon: <SunIcon />,
     },
   ],

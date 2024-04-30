@@ -65,12 +65,13 @@ export default function Home() {
       <div className="pt-24">
         <Hero />
         <SectionTitle
-          pretitle="Nextly Benefits"
-          title=" Why should you use this landing page"
+          pretitle="Square Edge Benefits"
+          title=" Why should you use Square Edge"
         >
-          Nextly is a free landing page & marketing website template for
-          startups and indie projects. Its built with Next.js & TailwindCSS. And
-          its completely open-source.
+          Square Edge revolutionizes online retail by transforming it with
+          interactive, engaging virtual experiences through industry-leading
+          live selling , delivering 8X more engagement than traditional digital
+          catalog-based selling.
         </SectionTitle>
         <Benefits data={benefitOne} />
         <Benefits imgPos="right" data={benefitTwo} />
@@ -78,22 +79,27 @@ export default function Home() {
           pretitle="Watch a video"
           title="Learn how to fullfil your needs"
         >
-          This section is to highlight a promo or demo video of your product.
-          Analysts says a landing page with video has 3% more conversion rate.
-          So, don&apos;t forget to add one. Just like this.
+          Square Edge revolutionizes online retail by transforming it with
+          interactive, engaging virtual experiences through industry-leading
+          live selling , delivering 8X more engagement than traditional digital
+          catalog-based selling.
         </SectionTitle>
         <Video />
         <SectionTitle
           pretitle="Testimonials"
           title="Here's what our customers said"
         >
-          Testimonails is a great way to increase the brand trust and awareness.
-          Use this section to highlight your popular customers.
+          Square Edge revolutionizes online retail by transforming it with
+          interactive, engaging virtual experiences through industry-leading
+          live selling , delivering 8X more engagement than traditional digital
+          catalog-based selling.
         </SectionTitle>
         <Testimonials />
         <SectionTitle pretitle="FAQ" title="Frequently Asked Questions">
-          Answer your customers possible questions here, it will increase the
-          conversion rate as well as support or chat requests.
+          Square Edge revolutionizes online retail by transforming it with
+          interactive, engaging virtual experiences through industry-leading
+          live selling , delivering 8X more engagement than traditional digital
+          catalog-based selling.
         </SectionTitle>
         <Faq />
         <Cta />

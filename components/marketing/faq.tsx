@@ -37,22 +37,24 @@ const Faq = () => {
 
 const faqdata = [
   {
-    question: "Is this template completely free to use?",
-    answer: "Yes, this template is completely free to use.",
+    question: "Is Square Edge completely free to use?",
+    answer: "Yes, Square Edge is completely free to use.",
   },
   {
-    question: "Can I use it in a commercial project?",
-    answer: "Yes, this you can.",
-  },
-  {
-    question: "What is your refund policy? ",
+    question: "Can I participate in live sale events as a customer?",
     answer:
-      "If you're unhappy with your purchase for any reason, email us within 90 days and we'll refund you in full, no questions asked.",
+      "Absolutely! As a customer, you can join live sale events hosted by sellers on their Square Online Store. Simply browse the products, engage with the seller, and make purchases during the event.",
   },
   {
-    question: "Do you offer technical support? ",
+    question:
+      "Is Square Edge compatible with other e-commerce platforms?",
     answer:
-      "No, we don't offer technical support for free downloads. Please purchase a support plan to get 6 months of support.",
+      "Currently, Square Edge is optimized for integration with Square Online Store. However, we are constantly exploring opportunities to expand compatibility with other e-commerce platforms in the future.",
+  },
+  {
+    question: "Can I use Square Edge on my mobile device?",
+    answer:
+      "Yes, Square Edge is designed to be mobile-friendly, allowing both sellers and customers to access live sale events and interact with ease on their smartphones or tablets.",
   },
 ];
 

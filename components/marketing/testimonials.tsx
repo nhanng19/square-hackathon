@@ -9,8 +9,9 @@ const Testimonials = () => {
         <div className="lg:col-span-2 xl:col-auto">
           <div className="flex flex-col justify-between w-full h-full bg-background px-14 rounded-2xl py-14 dark:bg-gray-800 border">
             <p className="text-2xl leading-normal ">
-              Share a real <Mark>testimonial</Mark>
-              that hits some of your benefits from one of your popular customer.
+              Now I can interact with customers in <Mark>real-time</Mark> and
+              they make confident purchases without the FOMO. It's a
+              game-changer!"
             </p>
 
             <Avatar
@@ -23,8 +24,8 @@ const Testimonials = () => {
         <div className="">
           <div className="flex flex-col justify-between w-full h-full bg-background px-14 rounded-2xl py-14 dark:bg-gray-800 border">
             <p className="text-2xl leading-normal ">
-              Make sure you only pick the <Mark>right sentence</Mark>
-              to keep it short and simple.
+              I <Mark>love</Mark> being able to join live sale events and
+              discover new products in real-time!
             </p>
 
             <Avatar
@@ -37,8 +38,8 @@ const Testimonials = () => {
         <div className="">
           <div className="flex flex-col justify-between w-full h-full bg-background px-14 rounded-2xl py-14 dark:bg-gray-800 border">
             <p className="text-2xl leading-normal ">
-              This is an <Mark>awesome</Mark> landing page template I&apos;ve
-              seen. I would use this for anything.
+              Square Edge has <Mark>revolutionized</Mark> the way I shop online.
+              It's shopping made simple
             </p>
 
             <Avatar
