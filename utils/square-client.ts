@@ -23,15 +23,12 @@ export const getOauthClient = () => {
  * we have authorized a user, and we have an access token for them.
  */
 export const getUserClient = (accessToken: string) => {
-  const { locationsApi, merchantsApi, oAuthApi, ordersApi, sitesApi, catalogApi, snippetsApi } = new Client({
+  const { oAuthApi, sitesApi, catalogApi, snippetsApi } = new Client({
     accessToken,
     environment: Environment.Production
   });
   return {
-    locationsApi,
-    merchantsApi,
     oAuthApi,
-    ordersApi,
     sitesApi,
     catalogApi,
     snippetsApi
