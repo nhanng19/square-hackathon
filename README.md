@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🎥 Square Edge - Square's Local Community Hackathon
 
-## Getting Started
+## 🚀 Submission
 
-First, run the development server:
+This project was submitted to Square's Local Community Hackathon.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+You can also try out the [live demo](https://squareedege.vercel.app/) by logging in with a Google or GitHub account.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+![Integration](/assets/landing.PNG)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 💡 Inspiration
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Finding a meal can be challenging, especially in a bustling city like Los Angeles where the options seem endless. My friend and I often struggled to settle on a restaurant when making dinner plans with a group, leading to frustration. That's when we came up with the idea for an app that's essentially Tinder for food. Our app streamlines the decision-making process by presenting users with curated food options that they can swipe through quickly. This not only helps users make choices faster but also allows them to potentially connect with fellow food enthusiasts for dining meetups. Our goal is to simplify the dining experience and foster connections over delicious food choices. After users are allowed to share their dining experiences and connect with friends or potential matches through our social platform.
 
-## Learn More
+![Integration](/assets/livestream.PNG)
 
-To learn more about Next.js, take a look at the following resources:
+## 💻 What it does
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Fooder Dating operates like a dating app, allowing users to swipe through curated food options and matching them with potential dining partners who share similar tastes. Our platform aims to facilitate enjoyable dining experiences and meaningful social interactions centered around food preferences.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+![Matches](/assets/screenshare.PNG)
 
-## Deploy on Vercel
+## ⚙️ How we built it
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+We developed Fooder Dating using modern web technologies such as HTML5, CSS3, JavaScript, Next.js for frontend, and Convex for backend infrastructure. We leverage Google Maps API for location-based insights and Yelp API for restaurant data, enhancing the user experience with personalized recommendations and valuable information.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+![Integration](/assets/integration.PNG)
+
+## 🧩 Challenges we ran into
+
+While achieving a cohesive user experience posed challenges, especially in balancing complex features and maintaining consistency, we've made significant progress. Collaborating closely and incorporating user feedback has been instrumental in our development journey.
+
+![Home](/assets/room.PNG)
+
+## 🎉 Accomplishments that we're proud of
+
+We're proud to introduce a unique platform focused on connecting users through their culinary interests. Fooder Dating offers a refreshing approach to finding dining spots and meeting like-minded individuals, fostering a vibrant community around food exploration.
+
+![Matches](/assets/recordings.PNG)
+
+## 📚 What we learned
+
+Developing Fooder Dating deepened our expertise in user-centric design, technical problem-solving, and agile project management. Our focus on collaboration, communication, user engagement, and data security has laid a strong foundation for future enhancements.
+
+## ❓ What's next for Fooder Dating
+
+In the future, we're looking to step up our game with Fooder Dating. We want to make finding the perfect dining spot even easier by fine-tuning our matchmaking features. Imagine getting recommendations that are spot-on every time!
+
+But that's not all. We're also thinking about bringing people together over food events and group dining experiences. It's all about creating a lively community around shared culinary interests.
+
+And hey, who doesn't love a good deal? We're planning to team up with local restaurants to offer exclusive discounts and perks to our users.
+
+Lastly, we're diving deep into AI to make our recommendations even smarter. The more you use the app, the better it gets at understanding your tastes and preferences. It's like having a personal foodie assistant in your pocket!
