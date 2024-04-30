@@ -47,6 +47,6 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
     );
     return NextResponse.json({...result}, { status: 200 })
   } catch (error) {
-    return errorResponse(error)
+    return NextResponse.json(error)
   }
 }
