@@ -34,7 +34,7 @@ const StreamLoadingScreen = ({
         process.env.NEXT_PUBLIC_ENVIRONMENT === "production"
           ? process.env.NEXT_PUBLIC_PRODUCTION_BASE_URL
           : process.env.NEXT_PUBLIC_DEVELOPMENT_BASE_URL
-      }video/${roomId}?host=true`;
+      }/video/${roomId}?host=true`;
       previousWindow = window.open(roomUrl, "_blank", newWindowFeatures);
     } catch (error) {
       toast.error(`${error}`);
