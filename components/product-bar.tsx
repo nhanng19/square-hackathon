@@ -27,7 +27,7 @@ const ProductBar = ({ roomId }: Props) => {
     catalogData && 
     <Sheet>
       <SheetTrigger className="absolute">
-        <div className=" block overflow-hidden top-3 mx-auto bg-background p-1 rounded-lg !justify-start">
+        <div className=" block overflow-hidden top-3 mx-auto bg-black p-1 rounded-lg !justify-start">
           <div className="flex justify-between items-center">
             <div className="block shrink-0">
               <img
