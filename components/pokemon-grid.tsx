@@ -46,7 +46,7 @@ export function PokemonGrid({ pokemonList } : PokemonGridProps) {
         <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-3 lg:text-left">
             {filteredPokemonList.map((pokemon : any) => {
                 return (
-                    <PokemonCard name={pokemon.name} />
+                    <PokemonCard name={pokemon.name} key={pokemon.name + "Card"}/>
                 )
             })}
         </div>
